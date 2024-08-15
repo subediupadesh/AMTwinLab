@@ -4,13 +4,13 @@
 [Mesh]
     type = GeneratedMesh
     dim = 2
-    nx = 150 #375
-    ny = 67  #100
+    nx = 200
+    ny = 100
     # nz = 5
     xmin = 0
-    xmax = 750
+    xmax = 1000
     ymin = 0
-    ymax = 201
+    ymax = 250
     # zmin = 0
     # zmax = 10
     # uniform_refine = 2
@@ -22,19 +22,19 @@
     [eta1]
         variable = eta1
         type = FunctionIC
-        function = 'if(y>150&y<=201 & x>=70&x<=130, 1, 0)'
+        function = 'if(y>200&y<=250 & x>=100&x<=150, 1, 0)'
     []
 
     [velocity_x]
         variable = vel_x
         type = FunctionIC
-        function =  'if(y>150&y<=201 & x>=70&x<=130, 1e-2, 1e-6)' 
+        function =  'if(y>200&y<=250 & x>=100&x<=150, 1e-2, 1e-6)' 
     []
 
     [velocity_y]
         variable = vel_y
         type = FunctionIC
-        function =  'if(y>150&y<=201 & x>=70&x<=130, 1e-2, 1e-6)' 
+        function =  'if(y>200&y<=250 & x>=100&x<=150, 1e-2, 1e-6)' 
     []
 
 []
@@ -45,19 +45,46 @@
     # 2D: bottom = 0, right = 1, top = 2, left = 3
     # 3D: back = 0, bottom = 1, right = 2, top = 3, left = 4, front = 5
 
-    [temp_fixed]
-        type = ADDirichletBC
-        variable = temp
-        boundary = 'bottom'
-        value = 300
-    []
+    # [temp_fixed]
+    #     type = ADDirichletBC
+    #     variable = temp
+    #     boundary = 'bottom'
+    #     value = 300
+    # []
 
-    [convectiveFlux]
+    [convectiveFlux_air]
         type = ConvectiveHeatFluxBC
         variable = temp
-        boundary = '0'
+        boundary = 'top'
         T_infinity = 300.0
         heat_transfer_coefficient = 0.05 # 50 W/m^2K for air  https://doi.org/10.1533/978-1-78242-164-1.353
+        heat_transfer_coefficient_dT = 0
+    []
+
+    [convectiveFlux_left]
+        type = ConvectiveHeatFluxBC
+        variable = temp
+        boundary = 'left'
+        T_infinity = 300.0
+        heat_transfer_coefficient = 1150 # 11500 W/m^2K for metal  https://doi.org/10.1016/j.intermet.2017.11.021
+        heat_transfer_coefficient_dT = 0
+    []
+
+    [convectiveFlux_right]
+        type = ConvectiveHeatFluxBC
+        variable = temp
+        boundary = 'right'
+        T_infinity = 300.0
+        heat_transfer_coefficient = 1150 # 11500 W/m^2K for metal  https://doi.org/10.1016/j.intermet.2017.11.021
+        heat_transfer_coefficient_dT = 0
+    []
+
+    [convectiveFlux_metal]
+        type = ConvectiveHeatFluxBC
+        variable = temp
+        boundary = 'bottom'
+        T_infinity = 300.0
+        heat_transfer_coefficient = 1.15e6 #1.15e6 # 11500 W/m^2K for metal  https://doi.org/10.1016/j.intermet.2017.11.021
         heat_transfer_coefficient_dT = 0
     []
 
@@ -125,12 +152,12 @@
 [Functions]
     [path_x]
         type = ParsedFunction
-        expression = 100+30.0*t
+        expression = 125+30.0*t
     []
 
     [path_y]
         type = ParsedFunction
-        expression = 201
+        expression = 250
     []
 
 []
@@ -281,25 +308,32 @@
 
     [beam_radius]
         type = ParsedMaterial
-        property_name = r0
+        property_name = rG
         material_property_names = 'length_scale'
-        expression = '50.0e-6*length_scale' #5 
+        expression = '70.0e-6*length_scale' #5 
     []
 
-    [power_fun]
+    [power_ON]
         type = ParsedMaterial
-        property_name = pow
+        property_name = pow_ON
         material_property_names = 'energy_scale time_scale'
         expression = '250*energy_scale/time_scale'
     []
 
+    [power_OFF]
+        type = ParsedMaterial
+        property_name = pow_OFF
+        material_property_names = 'energy_scale time_scale'
+        expression = '0*energy_scale/time_scale'
+    []
+
     [volumetric_heat]
-        type = SuperGaussianHS
-        power =pow
-        efficiency = 0.6
-        Ca = 2 # Coefficient Constant Outside Exponential
+        type = FlatTopHS
+        power =pow_OFF
+        efficiency = 0.75
+        Ca = 2 #1.595769122 # Coefficient Constant Outside Exponential
         Cb = 2 # Coefficient Constant Inside Exponential
-        r0 = r0
+        rG = rG
         factor = 1.0e-4
         SGOrder_K = 4.2
         alpha = absorptivity
@@ -308,7 +342,7 @@
     []  
 
 
-    [F_LIQUID]
+    [f1_LIQUID]
         type = DerivativeParsedMaterial
         property_name = F1
         material_property_names = 'length_scale energy_scale v_mol'
@@ -323,14 +357,14 @@
         expression = '(24.9435*temp*log(1-exp(-126.68742/temp))-8.3145*temp*log(1+exp(-0.120271814300319*(19700.0-14.917*temp)/temp))-0.00067*temp^2.0-326.386169615)*energy_scale/(v_mol*length_scale^3)'
     []
 
-    [F_FCC]
+    [f2_FCC]
         type = DerivativeParsedMaterial
         property_name = F2
         material_property_names = 'length_scale energy_scale v_mol'
         coupled_variables = 'temp'
 
         ## Polynomial Fitting
-        # constant_names = 'factor_f2  a2   b2   c2   d2   e2   f2   g_2  h_2  x2'
+    	# constant_names = 'factor_f2  a2   b2   c2   d2   e2   f2   g_2  h_2  x2'
         # constant_expressions = '9.9782  300   4985   -49.663  -12   0.235  -0.001  0.00002   -0.001  235 '
         # expression = 'factor_f2*(a2-b2-c2*(temp-x2)+d2*(temp-x2)*log(e2*temp)+f2*(temp-x2)^2+g_2*(temp-x2)^3+h_2/temp)*energy_scale/(v_mol*length_scale^3)'    
     
@@ -536,8 +570,8 @@
     nl_rel_tol          = 1e-08
     nl_abs_tol          = 1e-09
 
-    end_time            = 25
-    dt                  = 1.2e-1
+    end_time            = 28.0
+    dt                  = 0.06
 
     # [Adaptivity]
     #     initial_adaptivity = 1

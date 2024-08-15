@@ -4,8 +4,8 @@
 [Mesh]
     type = GeneratedMesh
     dim = 2
-    nx = 200
-    ny = 100
+    nx = 200 #200
+    ny = 100 #100
     # nz = 5
     xmin = 0
     xmax = 1000
@@ -332,7 +332,7 @@
         type = ParsedMaterial
         property_name = rR
         material_property_names = 'length_scale'
-        expression = '50e-6*length_scale' #40
+        expression = '70e-6*length_scale' #40
     []
 
     [ring_thickness]
@@ -358,10 +358,10 @@
 
     [volumetric_heat]
         type = AnnularHS #RingHS
-        power = pow_ON
-        efficiency = 0.87 #0.9
-        Ca = 1.595769122 # Coefficient Constant Outside Exponential
-        Cb = 1.5 # Coefficient Constant Inside Exponential
+        power = pow_OFF
+        efficiency = 0.75 #0.9
+        Ca = 2 #1.595769122 # Coefficient Constant Outside Exponential
+        Cb = 2 # Coefficient Constant Inside Exponential
         rT = rT
         rR = rR
         factor = 1.0e-4
@@ -370,7 +370,7 @@
         function_y= path_y
     []    
 
-    [F_LIQUID]
+    [f1_LIQUID]
         type = DerivativeParsedMaterial
         property_name = F1
         material_property_names = 'length_scale energy_scale v_mol'
@@ -385,7 +385,7 @@
         expression = '(24.9435*temp*log(1-exp(-126.68742/temp))-8.3145*temp*log(1+exp(-0.120271814300319*(19700.0-14.917*temp)/temp))-0.00067*temp^2.0-326.386169615)*energy_scale/(v_mol*length_scale^3)'
     []
 
-    [F_FCC]
+    [f2_FCC]
         type = DerivativeParsedMaterial
         property_name = F2
         material_property_names = 'length_scale energy_scale v_mol'
@@ -598,7 +598,7 @@
     nl_rel_tol          = 1e-08
     nl_abs_tol          = 1e-09
 
-    end_time            = 25.0 #27.0
+    end_time            = 28.0 #27.0
     dt                  = 0.06
 
     # [Adaptivity]

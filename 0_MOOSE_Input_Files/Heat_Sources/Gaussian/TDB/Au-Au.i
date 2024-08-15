@@ -310,7 +310,7 @@
         type = ParsedMaterial
         property_name = rG
         material_property_names = 'length_scale'
-        expression = '50.0e-6*length_scale' #5 
+        expression = '70.0e-6*length_scale' #5 
     []
 
     [power_ON]
@@ -330,8 +330,8 @@
     [volumetric_heat]
         type = GaussianHS
         power =pow_ON
-        efficiency = 0.87
-        Ca = 1.595769122 # Coefficient Constant Outside Exponential i.e. 2*sqrt(2/pi) using sigma = rG/2 in Eqn 2 https://link.springer.com/article/10.1007/s11837-023-06363-8
+        efficiency = 0.75
+        Ca = 2.0 #1.595769122 # Coefficient Constant Outside Exponential i.e. 2*sqrt(2/pi) using sigma = rG/2 in Eqn 2 https://link.springer.com/article/10.1007/s11837-023-06363-8
         Cb = 2.0 # Coefficient Constant Inside Exponential
         rG = rG
         factor = 1.0e-4
