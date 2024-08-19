@@ -1,11 +1,11 @@
 ## This is the moving laser hear source simulation for 2 eta 
-## Written on 12th of May 2024
+## Written on 19th of August 2024
 
 [Mesh]
     type = GeneratedMesh
     dim = 2
-    nx = 200 #200
-    ny = 100 #100
+    nx = 200
+    ny = 100
     # nz = 5
     xmin = 0
     xmax = 1000
@@ -160,29 +160,11 @@
         expression = 250
     []
 
-    # [laser_ON_OFF]
-    #     type = ParsedFunction
-    #     expression = 'if(t < 0.03, 250, 0)'
-    # []
+    [laser_switch]
+        type = ParsedFunction
+        expression = 'if(t<=25, 1, 0)'
+    []
 []
-
-# [Times]
-#     [times_on]
-#       type =  InputTimes
-#       # 8 should lie within the default window
-#       times = '1'
-#     []
-# []
-
-# [Controls]
-#     [times]
-#       type = TimesEnableControl
-#       times = 'times_on' #18.33
-#       enable_objects = 'Materials::power_on'
-#       disable_objects = 'Materials::power_off'
-#       execute_on = 'INITIAL TIMESTEP_END'
-#     []
-# []
 
 [Materials]
     [scale]
@@ -193,11 +175,40 @@
 
     [constants]
         type = GenericConstantMaterial
-        # prop_names = 'sigma delta gamma pseudo_M1 pseudo_M2 R' #sigma -> J/m^2; delta -> meter; M_si unit-> m^5/Js
-        prop_names = 'sigma delta gamma M1 M2 R'
-        # prop_values = '0.5 10.0e-7 1.5 1.5e-9 2.0e-14 8.31'
+        prop_names = 'sigma delta gamma M1 M2 R'  #sigma -> J/m^2; delta -> meter; M_si unit-> m^5/Js
         prop_values = '0.5 10.0e-7 1.5 2.0e-9 2.0e-14 8.31'
+        # prop_names = 'sigma delta gamma R'
+        # prop_values = '0.5 10.0e-6 1.5 8.31'
     []
+
+    # [M1] # M_si unit-> m^5/Js
+    #     type = DerivativeParsedMaterial
+    #     property_name = M1
+    #     material_property_names = 'R'
+    #     constant_names = 'F_M1 M01 Q1'
+    #     constant_expressions = '1e-8 3.15e-07  1073.15'
+    #     coupled_variables = 'temp'
+    #     expression = 'F_M1*M01*exp(-Q1/(R*temp))'
+    # []
+
+    # [M2]
+    #     type = DerivativeParsedMaterial
+    #     property_name = M2
+    #     material_property_names = 'R'
+    #     constant_names = 'F_M2 M02 Q2'
+    #     constant_expressions = '1e-8 3.38e-09  1165.84'
+    #     coupled_variables = 'temp'
+    #     expression = 'F_M2*M02*exp(-Q2/(R*temp))'
+    # []
+
+    # [L1-2]
+    #     type = ParsedMaterial
+    #     property_name = L1_2
+    #     constant_names = factor_L
+    #     constant_expressions = '1.0e8'
+    #     material_property_names = 'M1 M2 length_scale time_scale energy_scale mu kappa'
+    #     expression = 'factor_L*(0.5/0.2)*(M1+M2)*(mu/kappa)*(length_scale^3/(time_scale*energy_scale))'
+    # []
 
     [mu_values]
         type = GenericConstantMaterial
@@ -342,24 +353,17 @@
         expression = '20.0e-6*length_scale' #10
     []
 
-    [power_ON]
+    [laser_power]
         type = ParsedMaterial
-        property_name = pow_ON
+        property_name = Power
         material_property_names = 'energy_scale time_scale'
         expression = '250*energy_scale/time_scale'
     []
 
-    [power_OFF]
-        type = ParsedMaterial
-        property_name = pow_OFF
-        material_property_names = 'energy_scale time_scale'
-        expression = '0*energy_scale/time_scale'
-    []
-
     [volumetric_heat]
-        type = AnnularHS #RingHS
-        power = pow_OFF
-        efficiency = 0.75 #0.9
+        type = RingHS
+        power = Power
+        efficiency = 0.75
         Ca = 2 #1.595769122 # Coefficient Constant Outside Exponential
         Cb = 2 # Coefficient Constant Inside Exponential
         rT = rT
@@ -368,9 +372,10 @@
         alpha = absorptivity
         function_x= path_x
         function_y= path_y
+        laser_switch = laser_switch # Laser switch 1 for ON and 0 for OFF, as a Function of simulation time defined in Function bloc
     []    
 
-    [f1_LIQUID]
+    [F_LIQUID]
         type = DerivativeParsedMaterial
         property_name = F1
         material_property_names = 'length_scale energy_scale v_mol'
@@ -378,14 +383,15 @@
 
         ## Polynomial Fitting
         # constant_names = 'factor_f1  a1   b1   c1   d1   e1   f1   g_1  h_1  x1'
-        # constant_expressions = '12.3465  1337   18905   11.2    6.3   0.0023   0.0345    0.000019 -17.4  2227 '
+        ## constant_expressions = '12.3465  1337   18905   11.2    6.3   0.0023   0.0345    0.000019 -17.4  2227 '
+        # constant_expressions =   '10.412   1337   24474   16.2    24.5  0.00214  0.04512   0.000019  -17.4  2662'
         # expression = 'factor_f1*(a1-b1-c1*(temp-x1)+d1*(temp-x1)*log(e1*temp)+f1*(temp-x1)^2+g_1*(temp-x1)^3+h_1/temp)*energy_scale/(v_mol*length_scale^3)'    
             
         ## TDB Expression
         expression = '(24.9435*temp*log(1-exp(-126.68742/temp))-8.3145*temp*log(1+exp(-0.120271814300319*(19700.0-14.917*temp)/temp))-0.00067*temp^2.0-326.386169615)*energy_scale/(v_mol*length_scale^3)'
     []
 
-    [f2_FCC]
+    [F_FCC]
         type = DerivativeParsedMaterial
         property_name = F2
         material_property_names = 'length_scale energy_scale v_mol'
@@ -393,7 +399,8 @@
 
         ## Polynomial Fitting
         # constant_names = 'factor_f2  a2   b2   c2   d2   e2   f2   g_2  h_2  x2'
-        # constant_expressions = '9.9782  300   4985   -49.663  -12   0.235  -0.001  0.00002   -0.001  235 '
+        ## constant_expressions = '9.9782  300   4985   -49.663  -12   0.235  -0.001  0.00002   -0.001  235 '
+        # constant_expressions =    '9.03   300    515    -46.2   -13.5 0.1985 -0.001  0.00002   -0.001  121'
         # expression = 'factor_f2*(a2-b2-c2*(temp-x2)+d2*(temp-x2)*log(e2*temp)+f2*(temp-x2)^2+g_2*(temp-x2)^3+h_2/temp)*energy_scale/(v_mol*length_scale^3)'    
     
         ## TDB Expression
@@ -598,7 +605,7 @@
     nl_rel_tol          = 1e-08
     nl_abs_tol          = 1e-09
 
-    end_time            = 28.0 #27.0
+    end_time            = 28.0
     dt                  = 0.06
 
     # [Adaptivity]

@@ -1,15 +1,11 @@
 ## This is the moving laser hear source simulation for 2 eta 
-## Written on 12th of May 2024
-
-length_scale  = 1.0e6
-time_scale    = 1.0e0
-energy_scale  = 1.0e9
+## Written on 19th of August 2024
 
 [Mesh]
     type = GeneratedMesh
     dim = 2
-    nx = 200
-    ny = 100
+    nx = 50 #200
+    ny = 20 #100
     # nz = 5
     xmin = 0
     xmax = 1000
@@ -59,7 +55,7 @@ energy_scale  = 1.0e9
     [convectiveFlux_air]
         type = ConvectiveHeatFluxBC
         variable = temp
-        boundary = 'top'
+        boundary = 'left top'
         T_infinity = 300.0
         heat_transfer_coefficient = 0.05 # 50 W/m^2K for air  https://doi.org/10.1533/978-1-78242-164-1.353
         heat_transfer_coefficient_dT = 0
@@ -88,7 +84,7 @@ energy_scale  = 1.0e9
         variable = temp
         boundary = 'bottom'
         T_infinity = 300.0
-        heat_transfer_coefficient = 1.15e6 #1.15e6 # 11500 W/m^2K for metal  https://doi.org/10.1016/j.intermet.2017.11.021
+        heat_transfer_coefficient = 1.15e6 # 11500 W/m^2K for metal  https://doi.org/10.1016/j.intermet.2017.11.021
         heat_transfer_coefficient_dT = 0
     []
 
@@ -116,7 +112,7 @@ energy_scale  = 1.0e9
     # [Periodic]
     #     [horizontally]
     #         auto_direction = 'x'
-    #         # variable = 'temp'
+    #         variable = 'temp'
     #     []
     # []
 
@@ -164,27 +160,23 @@ energy_scale  = 1.0e9
         expression = 250
     []
 
-    [laser_power]
+    [laser_switch]
         type = ParsedFunction
-        expression = 'if(t<=25, 250*${energy_scale}/${time_scale}, 0)'
+        expression = 'if(t<=2, 1, 0)'
     []
-
 []
 
 [Materials]
     [scale]
         type = GenericConstantMaterial
-        prop_names = 'v_mol'  # 6.24150943e18 ev
-        prop_values = '10.21e-6' 
+        prop_names = 'length_scale time_scale energy_scale v_mol'  # 6.24150943e18 ev
+        prop_values = '1.0e6 1.0e0 1.0e9 10.21e-6' 
     []
 
     [constants]
         type = GenericConstantMaterial
-        prop_names = 'sigma delta gamma R' #sigma -> J/m^2; delta -> meter;
+        prop_names = 'sigma delta gamma R' #sigma -> J/m^2; delta -> meter; M_si unit-> m^5/Js
         prop_values = '0.5 10.0e-6 1.5 8.31'
-        # prop_names = 'sigma delta gamma M1 M2 R'
-        # # prop_values = '0.5 10.0e-7 1.5 2.0e-9 2.0e-14 8.31'
-        # prop_values = '0.5 10.0e-6 1.5 2.0e-8 2.0e-11 8.31'
     []
 
     [M1] # M_si unit-> m^5/Js
@@ -192,7 +184,7 @@ energy_scale  = 1.0e9
         property_name = M1
         material_property_names = 'R'
         constant_names = 'F_M1 M01 Q1'
-        constant_expressions = '1e-8 4.11e-07  7691.94'
+        constant_expressions = '1e-8 3.15e-07  1073.15'
         coupled_variables = 'temp'
         expression = 'F_M1*M01*exp(-Q1/(R*temp))'
     []
@@ -235,8 +227,8 @@ energy_scale  = 1.0e9
     [mu_NS]
         type = ParsedMaterial
         property_name = mu_name  # To distinguish with phase field mu (https://github.com/idaholab/moose/blob/next/modules/navier_stokes/src/kernels/INSBase.C)
-        material_property_names = 'mu1 mu2 h1'
-        expression = '(h1*mu1 + 10*mu1*h1*(1-h1)+ (1-h1)*mu2) / (${length_scale}*${time_scale})'
+        material_property_names = 'length_scale time_scale energy_scale mu1 mu2 h1'
+        expression = '(h1*mu1 + 10*mu1*h1*(1-h1)+ (1-h1)*mu2) / (length_scale*time_scale)'
     [] 
 
     [conductivity_values] # Thermal conductivity of 2 phases
@@ -268,8 +260,8 @@ energy_scale  = 1.0e9
     [conductivity]
         type = ParsedMaterial
         property_name = thermal_conductivity
-        material_property_names = 'k1 k2 h1'
-        expression = '(h1*k1 + (1-h1)*k2)*${energy_scale}/(${length_scale}*${time_scale})'
+        material_property_names = ' length_scale time_scale energy_scale k1 k2 h1'
+        expression = '(h1*k1 + (1-h1)*k2)*energy_scale/(length_scale*time_scale)'
     []
 
     [density_values] # Density of phases
@@ -301,8 +293,8 @@ energy_scale  = 1.0e9
     [density]
         type = ParsedMaterial
         property_name = density_name
-        material_property_names = 'rho1 rho2 h1'
-        expression = '(h1*rho1 + (1-h1)*rho2)/(${length_scale}^3)'
+        material_property_names = 'length_scale rho1 rho2 h1'
+        expression = '(h1*rho1 + (1-h1)*rho2)/(length_scale^3)'
     []
 
     [spec_heat_values] # Specific Heat of phases
@@ -334,64 +326,126 @@ energy_scale  = 1.0e9
     [specific_heat]
         type = ParsedMaterial
         property_name = specific_heat
-        material_property_names = 'sp1 sp2 h1'
-        expression = '(h1*sp1 + (1-h1)*sp2)*${energy_scale}'
+        material_property_names = 'energy_scale sp1 sp2 h1'
+        expression = '(h1*sp1 + (1-h1)*sp2)*energy_scale'
     []
 
     [absorptivity_value]
         type = ParsedMaterial
         property_name = absorptivity
-        expression = '8.5e7/${length_scale}'
+        material_property_names = 'length_scale'
+        expression = '8.5e7/length_scale'
     []
 
-    [beam_radius]
+    [Inner_Gaussian_Beam_Radius]
         type = ParsedMaterial
         property_name = rG
-        expression = '70.0e-6*${length_scale}' #5 
+        material_property_names = 'length_scale'
+        expression = '22.65e-6*length_scale'
+    []
+
+    [First_RingBeam_Radius]
+        type = ParsedMaterial
+        property_name = rR1
+        material_property_names = 'length_scale'
+        expression = '40.0e-6*length_scale' 
+    []
+
+    [First_RingBeam_Thickness]
+        type = ParsedMaterial
+        property_name = rT1
+        material_property_names = 'length_scale'
+        expression = '30.0e-6*length_scale' 
+    []
+
+    [Second_RingBeam_Radius]
+        type = ParsedMaterial
+        property_name = rR2
+        material_property_names = 'length_scale'
+        expression = '70.0e-6*length_scale' 
+    []
+
+    [Second_RingBeam_Thickness]
+        type = ParsedMaterial
+        property_name = rT2
+        material_property_names = 'length_scale'
+        expression = '20.0e-6*length_scale' 
+    []
+
+    [Third_RingBeam_Radius]
+        type = ParsedMaterial
+        property_name = rR3
+        material_property_names = 'length_scale'
+        expression = '100.0e-6*length_scale' 
+    []
+
+    [Third_RingBeam_Thickness]
+        type = ParsedMaterial
+        property_name = rT3
+        material_property_names = 'length_scale'
+        expression = '20.0e-6*length_scale' 
+    []
+
+    [laser_power]
+        type = ParsedMaterial
+        property_name = P
+        material_property_names = 'energy_scale time_scale'
+        expression = '250*energy_scale/time_scale'
     []
 
     [volumetric_heat]
-        type = GaussianHS
-        power = laser_power
+        type = LaserSource
+        power = P
         efficiency = 0.75
-        Ca = 2.0 #1.595769122 # Coefficient Constant Outside Exponential i.e. 2*sqrt(2/pi) using sigma = rG/2 in Eqn 2 https://link.springer.com/article/10.1007/s11837-023-06363-8
+        a0 = 0.0 # gaussian_power_prop
+        a1 = 0.0 # first_ring_power_prop
+        a2 = 1.0 # second_ring_power_prop
+        a3 = 0.0 # ${fparse 1-a0-a1-a2} # third_ring_power_prop
+        Ca = 2.0 # Coefficient Constant Outside Exponential
         Cb = 2.0 # Coefficient Constant Inside Exponential
         rG = rG
+        rR1 = rR1
+        rT1 = rT1
+        rR2 = rR2
+        rT2 = rT2  
+        rR3 = rR3
+        rT3 = rT3       
         factor = 1.0e-4
+        SGOrder_K = 1 # Super Gaussian Order
         alpha = absorptivity
         function_x= path_x
         function_y= path_y
-    []  
-
+        laser_switch = laser_switch # Laser switch 1 for ON and 0 for OFF, as a Function of simulation time defined in Function bloc
+    []   
 
     [F_LIQUID]
         type = DerivativeParsedMaterial
         property_name = F1
-        material_property_names = 'v_mol'
+        material_property_names = 'length_scale energy_scale v_mol'
         coupled_variables = 'temp'
 
         ## Polynomial Fitting
-        constant_names = 'factor_f1  a1   b1   c1   d1   e1   f1   g_1  h_1  x1'
-        constant_expressions = '12.3465  1337   18905   11.2    6.3   0.0023   0.0345    0.000019 -17.4  2227 '
-        expression = 'factor_f1*(a1-b1-c1*(temp-x1)+d1*(temp-x1)*log(e1*temp)+f1*(temp-x1)^2+g_1*(temp-x1)^3+h_1/temp)*${energy_scale}/(v_mol*${length_scale}^3)'    
+        # constant_names = 'factor_f1  a1   b1   c1   d1   e1   f1   g_1  h_1  x1'
+        # constant_expressions =   '10.412   1337   24474   16.2    24.5  0.00214  0.04512   0.000019  -17.4  2662'
+        # expression = 'factor_f1*(a1-b1-c1*(temp-x1)+d1*(temp-x1)*log(e1*temp)+f1*(temp-x1)^2+g_1*(temp-x1)^3+h_1/temp)*energy_scale/(v_mol*length_scale^3)'    
             
         ## TDB Expression
-        # expression = '(24.9435*temp*log(1-exp(-126.68742/temp))-8.3145*temp*log(1+exp(-0.120271814300319*(19700.0-14.917*temp)/temp))-0.00067*temp^2.0-326.386169615)*${energy_scale}/(v_mol*${length_scale}^3)'
+        expression = '(24.9435*temp*log(1-exp(-126.68742/temp))-8.3145*temp*log(1+exp(-0.120271814300319*(19700.0-14.917*temp)/temp))-0.00067*temp^2.0-326.386169615)*energy_scale/(v_mol*length_scale^3)'
     []
 
     [F_FCC]
         type = DerivativeParsedMaterial
         property_name = F2
-        material_property_names = 'v_mol'
+        material_property_names = 'length_scale energy_scale v_mol'
         coupled_variables = 'temp'
 
         ## Polynomial Fitting
-    	constant_names = 'factor_f2  a2   b2   c2   d2   e2   f2   g_2  h_2  x2'
-        constant_expressions = '9.9782  300   4985   -49.663  -12   0.235  -0.001  0.00002   -0.001  235 '
-        expression = 'factor_f2*(a2-b2-c2*(temp-x2)+d2*(temp-x2)*log(e2*temp)+f2*(temp-x2)^2+g_2*(temp-x2)^3+h_2/temp)*${energy_scale}/(v_mol*${length_scale}^3)'    
+        # constant_names = 'factor_f2  a2   b2   c2   d2   e2   f2   g_2  h_2  x2'
+        # constant_expressions =    '9.03   300    515    -46.2   -13.5 0.1985 -0.001  0.00002   -0.001  121'
+        # expression = 'factor_f2*(a2-b2-c2*(temp-x2)+d2*(temp-x2)*log(e2*temp)+f2*(temp-x2)^2+g_2*(temp-x2)^3+h_2/temp)*energy_scale/(v_mol*length_scale^3)'    
     
         ## TDB Expression
-        # expression = '(24.9435*temp*log(1-exp(-126.68742/temp))+1.0*if(temp<1337.33,-0.001281018525*temp^2.0-4.02278360455656e-7*temp^3.0,1.55127e+36*temp^(-11.0)-2.27748e+18*temp^(-5.0)-2.0566206*temp*log(temp)+9.807219*temp+3898.778)-6103.656619615)*${energy_scale}/(v_mol*${length_scale}^3)'
+        expression = '(24.9435*temp*log(1-exp(-126.68742/temp))+1.0*if(temp<1337.33,-0.001281018525*temp^2.0-4.02278360455656e-7*temp^3.0,1.55127e+36*temp^(-11.0)-2.27748e+18*temp^(-5.0)-2.0566206*temp*log(temp)+9.807219*temp+3898.778)-6103.656619615)*energy_scale/(v_mol*length_scale^3)'
     []
 
     [h1]
@@ -412,31 +466,22 @@ energy_scale  = 1.0e9
     [mu]
         type = ParsedMaterial
         property_name = mu
-        material_property_names = 'sigma delta'
-        expression = '6*(sigma/delta)*(${energy_scale}/${length_scale}^3)'
+        material_property_names = 'sigma delta energy_scale length_scale'
+        expression = '6*(sigma/delta)*(energy_scale/length_scale^3)'
     []
 
     [kappa]
         type = ParsedMaterial
         property_name = kappa
-        material_property_names = 'sigma delta'
-        expression = '0.75*(sigma*delta)*(${energy_scale}/${length_scale})'
+        material_property_names = 'sigma delta energy_scale length_scale'
+        expression = '0.75*(sigma*delta)*(energy_scale/length_scale)'
     []
 
     # [Mobility]
     #     type = ParsedMaterial
     #     property_name = M
-    #     material_property_names = 'M1 M2 h1'
-    #     expression = '(h1*M1 + (1-h1)*M2)*(${length_scale}^5/(${time_scale}*${energy_scale}))'
-    # []
-
-    # [L1-2]
-    #     type = ParsedMaterial
-    #     property_name = L1_2
-    #     constant_names = factor_L
-    #     constant_expressions = '1e7'
-    #     material_property_names = 'M1 M2 mu kappa'
-    #     expression = 'factor_L*(0.5/0.2)*(M1+M2)*(mu/kappa)*(${length_scale}^3/(${time_scale}*${energy_scale}))'
+    #     material_property_names = 'length_scale time_scale energy_scale M1 M2 h1'
+    #     expression = '(h1*M1 + (1-h1)*M2)*(length_scale^5/(time_scale*energy_scale))'
     # []
 
     [Interface_Mobility]
@@ -551,7 +596,7 @@ energy_scale  = 1.0e9
         variable = temp
     []
 
-     # Kernels for Allen-Cahn equation for eta1
+   # Kernels for Allen-Cahn equation for eta1
     [deta1dt]
         type = TimeDerivative
         variable = eta1
@@ -592,7 +637,7 @@ energy_scale  = 1.0e9
     nl_rel_tol          = 1e-08
     nl_abs_tol          = 1e-09
 
-    end_time            = 25.0
+    end_time            = 28.0 #27.0
     dt                  = 0.06
 
     # [Adaptivity]
