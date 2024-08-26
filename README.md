@@ -7,6 +7,9 @@
 
 ## Phase Evolution
 ### Bessel Heat Source with TDB Free Energy
+#### Phase Evolution
 ![Bessel_Phase](3_Simulation_Video_Animation/video_animations/Bessel/TDB/gif/Phase.gif)
+#### Temperature Distribution
 ![Bessel_Temperature](3_Simulation_Video_Animation/video_animations/Bessel/TDB/gif/Temperature.gif)
+#### Velocity Profile
 ![Bessel_Velocity](3_Simulation_Video_Animation/video_animations/Bessel/TDB/gif/Velocity.gif)
