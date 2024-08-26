@@ -5,5 +5,8 @@
 [Tomasz Tański](https://www.linkedin.com/in/tomasz-tanski-888bb266/),
 [Anil Kunwar](https://www.linkedin.com/in/anil-kunwar-9ba81653/)
 
-## Simulation Animation
-![Graphical Abstract](3_Simulation_Video_Animation/video_animations/Bessel/TDB/gif/Phase.gif)
+## Phase Evolution
+### Bessel Heat Source with TDB Free Energy
+![Bessel_Phase](3_Simulation_Video_Animation/video_animations/Bessel/TDB/gif/Phase.gif)
+![Bessel_Temperature](3_Simulation_Video_Animation/video_animations/Bessel/TDB/gif/Temperature.gif)
+![Bessel_Velocity](3_Simulation_Video_Animation/video_animations/Bessel/TDB/gif/Velocity.gif)
