@@ -478,6 +478,7 @@
         u = vel_x
         v = vel_y
         pressure = p
+        mu_name = mu_name
         rho_name = density_name
     []
 

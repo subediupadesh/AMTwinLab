@@ -162,7 +162,7 @@
 
     [laser_switch]
         type = ParsedFunction
-        expression = 'if(t<=2, 1, 0)'
+        expression = 'if(t<=25, 1, 0)'
     []
 []
 
@@ -518,6 +518,7 @@
         u = vel_x
         v = vel_y
         pressure = p
+        mu_name = mu_name
         rho_name = density_name
     []
 
