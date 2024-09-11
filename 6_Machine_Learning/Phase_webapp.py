@@ -149,25 +149,25 @@ criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-4)
 
 # Load the entire model
-model = torch.load('6_Machine_Learning/trained_model/trained_model.pth')
-model.eval()
+# model = torch.load('6_Machine_Learning/trained_model/trained_model.pth')
+# model.eval()
 
 # Load the state dict model for inference only
 # model.load_state_dict(torch.load('6_Machine_Learning/trained_model/model.pth'))
 
-# # Function to join split files
-# def join_files(output_file, parts_dir, parts):
-#     with open(output_file, 'wb') as outfile:
-#         for part in parts:
-#             part_path = os.path.join(parts_dir, part)
-#             with open(part_path, 'rb') as infile:
-#                 outfile.write(infile.read())
+# Function to join split files
+def join_files(output_file, parts_dir, parts):
+    with open(output_file, 'wb') as outfile:
+        for part in parts:
+            part_path = os.path.join(parts_dir, part)
+            with open(part_path, 'rb') as infile:
+                outfile.write(infile.read())
 
-# parts_dir = '6_Machine_Learning/trained_model'
-# parts = ['model_part_aa', 'model_part_ab', 'model_part_ac', 'model_part_ad','model_part_ae']
-# output_file = 'model.pth'
-# join_files(output_file, parts_dir, parts)
-# model.load_state_dict(torch.load(output_file))
+parts_dir = '6_Machine_Learning/trained_model'
+parts = ['model_part_aa', 'model_part_ab', 'model_part_ac', 'model_part_ad','model_part_ae']
+output_file = 'model.pth'
+join_files(output_file, parts_dir, parts)
+model.load_state_dict(torch.load(output_file))
 
 model.eval()
 
