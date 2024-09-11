@@ -1,6 +1,6 @@
 import streamlit as st
 import torch
-# import os
+import os
 import numpy as np
 from torch import nn
 import torch.optim as optim
@@ -151,6 +151,15 @@ optimizer = optim.Adam(model.parameters(), lr=1e-4)
 # Load the state dict model for inference only
 model.load_state_dict(torch.load('trained_model/model.pth'))
 model.eval()
+
+print("Current working directory:", os.getcwd())
+
+# model_path = 'trained_model/model.pth'
+
+# if not os.path.isfile(model_path):
+#     print(f"File not found: {model_path}")
+# else:
+#     model.load_state_dict(torch.load(model_path))
 
 if option == 0:
     # Display file uploader
