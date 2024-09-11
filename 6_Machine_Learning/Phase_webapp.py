@@ -6,9 +6,8 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 import matplotlib.pyplot as plt
-# from io import BytesIO
-# import cv2
-from skimage.transform import resize
+from io import BytesIO
+import cv2
 # device = 'cuda' if torch.cuda.is_available() else 'cpu'
 device = 'cpu'
 
@@ -24,12 +23,8 @@ option = st.selectbox("Select Data to use:",
     options=[("Select Test Sample", 1), ("Upload Temperature Distribution", 0)],
     format_func=lambda x: x[0])[1]
 
-# def transform_array(arr, target_shape=(201, 401)):
-#     arr_resized = cv2.resize(arr, (target_shape[1], target_shape[0]), interpolation=cv2.INTER_NEAREST)
-#     return arr_resized
-
 def transform_array(arr, target_shape=(201, 401)):
-    arr_resized = resize(arr, (target_shape[0], target_shape[1]), order=0, mode='reflect', anti_aliasing=False)
+    arr_resized = cv2.resize(arr, (target_shape[1], target_shape[0]), interpolation=cv2.INTER_NEAREST)
     return arr_resized
 
 # UNet model definition
@@ -144,7 +139,11 @@ criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-4)
 
 # Load the entire model
-model = torch.load('trained_model/trained_model.pth')
+# model = torch.load('trained_model/trained_model.pth')
+# model.eval()
+
+# Load the state dict model for inference only
+model.load_state_dict(torch.load('trained_model/model.pth'))
 model.eval()
 
 if option == 0:
