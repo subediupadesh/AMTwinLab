@@ -324,7 +324,7 @@ elif option == 1:
     contour_levels = [450, 700,  1337]
     label_colors = ['k', 'k', 'aqua']
     contour = ax3.contour(X_test_array[0][0], levels=contour_levels, colors='crimson', linewidths=3, linestyles='dashdot')
-    labels = plt.clabel(contour, inline=True, fontsize=24, fmt='%1.0f K')
+    labels = plt.clabel(contour, inline=True, fontsize=20, fmt='%1.0f K')
     for label, color in zip(labels, label_colors): label.set_fontweight('bold');label.set_color(color) 
 
     cmap = plt.get_cmap('RdYlGn_r')
