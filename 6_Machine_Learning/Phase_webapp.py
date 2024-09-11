@@ -17,7 +17,7 @@ device = 'cpu'
 
 # path = os.path.abspath('')
 
-st.write("Current working directory:", os.getcwd())
+# st.write("Current working directory:", os.getcwd())
 
 
 st.set_page_config(layout="wide")
@@ -149,11 +149,11 @@ criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-4)
 
 # Load the entire model
-# model = torch.load('trained_model/model.pth')
+# model = torch.load('6_Machine_Learning/trained_model/model.pth')
 # model.eval()
 
 # Load the state dict model for inference only
-# model.load_state_dict(torch.load('trained_model/model.pth'))
+# model.load_state_dict(torch.load('6_Machine_Learning/trained_model/model.pth'))
 
 
 # Function to join split files
@@ -164,7 +164,7 @@ def join_files(output_file, parts_dir, parts):
             with open(part_path, 'rb') as infile:
                 outfile.write(infile.read())
 
-parts_dir = 'trained_model'
+parts_dir = '6_Machine_Learning/trained_model'
 parts = ['model_part_aa', 'model_part_ab', 'model_part_ac', 'model_part_ad','model_part_ae']
 output_file = 'model.pth'
 join_files(output_file, parts_dir, parts)
@@ -353,7 +353,7 @@ elif option == 1:
 st.divider()
 
 # Plotting function for losses and accuracies
-def plot_training_history(history_path='trained_model/training_history.npy'):
+def plot_training_history(history_path='6_Machine_Learning/trained_model/training_history.npy'):
     # Load the training history
     history = np.load(history_path, allow_pickle=True).item()
     
