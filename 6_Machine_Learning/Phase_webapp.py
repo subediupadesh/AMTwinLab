@@ -6,8 +6,9 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 import matplotlib.pyplot as plt
-from io import BytesIO
-import cv2
+# from io import BytesIO
+# import cv2
+from skimage.transform import resize
 # device = 'cuda' if torch.cuda.is_available() else 'cpu'
 device = 'cpu'
 
@@ -23,8 +24,12 @@ option = st.selectbox("Select Data to use:",
     options=[("Select Test Sample", 1), ("Upload Temperature Distribution", 0)],
     format_func=lambda x: x[0])[1]
 
+# def transform_array(arr, target_shape=(201, 401)):
+#     arr_resized = cv2.resize(arr, (target_shape[1], target_shape[0]), interpolation=cv2.INTER_NEAREST)
+#     return arr_resized
+
 def transform_array(arr, target_shape=(201, 401)):
-    arr_resized = cv2.resize(arr, (target_shape[1], target_shape[0]), interpolation=cv2.INTER_NEAREST)
+    arr_resized = resize(arr, (target_shape[0], target_shape[1]), order=0, mode='reflect', anti_aliasing=False)
     return arr_resized
 
 # UNet model definition
