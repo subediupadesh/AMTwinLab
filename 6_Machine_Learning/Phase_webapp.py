@@ -1,5 +1,6 @@
 import streamlit as st
 import torch
+import os
 import numpy as np
 from torch import nn
 import torch.optim as optim
@@ -11,6 +12,7 @@ from skimage.transform import resize
 # device = 'cuda' if torch.cuda.is_available() else 'cpu'
 device = 'cpu'
 
+path = os.path.abspath('')
 
 st.set_page_config(layout="wide")
 
@@ -143,11 +145,11 @@ criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-4)
 
 # Load the entire model
-# model = torch.load('trained_model/trained_model.pth')
+# model = torch.load(path+'/trained_model/model.pth')
 # model.eval()
 
 # Load the state dict model for inference only
-model.load_state_dict(torch.load('trained_model/model.pth'))
+model.load_state_dict(torch.load(path+'/trained_model/model.pth'))
 model.eval()
 
 if option == 0:
@@ -331,7 +333,7 @@ elif option == 1:
 st.divider()
 
 # Plotting function for losses and accuracies
-def plot_training_history(history_path='trained_model/training_history.npy'):
+def plot_training_history(history_path=path+'/trained_model/training_history.npy'):
     # Load the training history
     history = np.load(history_path, allow_pickle=True).item()
     
