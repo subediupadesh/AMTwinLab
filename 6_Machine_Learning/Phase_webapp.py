@@ -18,7 +18,7 @@ st.set_page_config(layout="wide")
 
 st.title("Phase from thermal history | A Test Web App")
 
-
+print("Current working directory:", os.getcwd())
 
 
 option = st.selectbox("Select Data to use:", 
@@ -152,7 +152,7 @@ optimizer = optim.Adam(model.parameters(), lr=1e-4)
 model.load_state_dict(torch.load('trained_model/model.pth'))
 model.eval()
 
-print("Current working directory:", os.getcwd())
+
 
 # model_path = 'trained_model/model.pth'
 
