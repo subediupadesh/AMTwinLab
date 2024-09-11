@@ -18,8 +18,6 @@ st.set_page_config(layout="wide")
 
 st.title("Phase from thermal history | A Test Web App")
 
-print("Current working directory:", os.getcwd())
-
 
 option = st.selectbox("Select Data to use:", 
     options=[("Select Test Sample", 1), ("Upload Temperature Distribution", 0)],
@@ -145,21 +143,12 @@ criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-4)
 
 # Load the entire model
-# model = torch.load('trained_model/model.pth')
+# model = torch.load('model.pth')
 # model.eval()
 
 # Load the state dict model for inference only
-model.load_state_dict(torch.load('trained_model/model.pth'))
+model.load_state_dict(torch.load('model.pth'))
 model.eval()
-
-
-
-# model_path = 'trained_model/model.pth'
-
-# if not os.path.isfile(model_path):
-#     print(f"File not found: {model_path}")
-# else:
-#     model.load_state_dict(torch.load(model_path))
 
 if option == 0:
     # Display file uploader
@@ -342,7 +331,7 @@ elif option == 1:
 st.divider()
 
 # Plotting function for losses and accuracies
-def plot_training_history(history_path='trained_model/training_history.npy'):
+def plot_training_history(history_path='training_history.npy'):
     # Load the training history
     history = np.load(history_path, allow_pickle=True).item()
     
