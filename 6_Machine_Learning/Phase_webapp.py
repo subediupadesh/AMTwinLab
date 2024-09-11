@@ -245,8 +245,8 @@ if option == 0:
         st.write("Please upload the Temperature Distribution 2D numpy array.")
 
 elif option == 1:
-    X_test_array = np.load('data/X_test.npy')
-    y_test_array = np.load('data/y_test.npy')
+    X_test_array = np.load('6_Machine_Learning/data/X_test.npy')
+    y_test_array = np.load('6_Machine_Learning/data/y_test.npy')
     observation = st.slider("Select observation", min_value=1, max_value=X_test_array.shape[0], value=154) - 1
     X_test_array =  X_test_array[observation:observation+1,:,:,:]
     y_test_array = y_test_array[observation:observation+1,:,:,:]
