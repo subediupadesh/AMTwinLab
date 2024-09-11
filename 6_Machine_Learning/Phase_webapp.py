@@ -155,7 +155,6 @@ model.eval()
 # Load the state dict model for inference only
 # model.load_state_dict(torch.load('6_Machine_Learning/trained_model/model.pth'))
 
-
 # # Function to join split files
 # def join_files(output_file, parts_dir, parts):
 #     with open(output_file, 'wb') as outfile:
