@@ -290,6 +290,10 @@ elif option == 1:
     labels = plt.clabel(contour, inline=True, fontsize=20, fmt='%1.0f K')
     for label, color in zip(labels, label_colors): label.set_fontweight('bold');label.set_color(color) 
 
+    contour_level_LIQ = [0.8]
+    contour_LIQ = ax1.contour(y_test[0][0], levels=contour_level_LIQ, colors='orangered', linestyles='--', linewidths=8,)
+
+
     cmap = plt.get_cmap('RdYlGn_r')
     cmap.set_under('white', alpha=0)
     hmap2 = ax2.imshow(pred_error[0][0], cmap=cmap, vmin=-1, vmax=1, aspect=0.5)
