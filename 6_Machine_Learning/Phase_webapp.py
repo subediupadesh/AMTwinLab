@@ -17,6 +17,9 @@ device = 'cpu'
 
 # path = os.path.abspath('')
 
+st.write("Current working directory:", os.getcwd())
+
+
 st.set_page_config(layout="wide")
 
 st.title("Phase from thermal history | A Test Web App")
