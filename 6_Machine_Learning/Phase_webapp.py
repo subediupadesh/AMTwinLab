@@ -1,3 +1,5 @@
+#  split -b 25M model.pth model_part_ ## use in command line to split file to 25MB chunks
+
 import streamlit as st
 import torch
 import os
@@ -8,6 +10,7 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 import matplotlib.pyplot as plt
 from skimage.transform import resize
+import requests
 # import cv2
 # device = 'cuda' if torch.cuda.is_available() else 'cpu'
 device = 'cpu'
@@ -147,7 +150,23 @@ optimizer = optim.Adam(model.parameters(), lr=1e-4)
 # model.eval()
 
 # Load the state dict model for inference only
-model.load_state_dict(torch.load('trained_model/model.pth'))
+# model.load_state_dict(torch.load('trained_model/model.pth'))
+
+
+# Function to join split files
+def join_files(output_file, parts_dir, parts):
+    with open(output_file, 'wb') as outfile:
+        for part in parts:
+            part_path = os.path.join(parts_dir, part)
+            with open(part_path, 'rb') as infile:
+                outfile.write(infile.read())
+
+parts_dir = 'trained_model'
+parts = ['model_part_aa', 'model_part_ab', 'model_part_ac', 'model_part_ad','model_part_ae']
+output_file = 'model.pth'
+join_files(output_file, parts_dir, parts)
+
+model.load_state_dict(torch.load(output_file))
 model.eval()
 
 if option == 0:
