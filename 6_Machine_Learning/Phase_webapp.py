@@ -286,12 +286,12 @@ elif option == 1:
 
     contour_levels = [450, 700,  1337]
     label_colors = ['k', 'k', 'k']
-    contour = ax1.contour(X_test_array[0][0], levels=contour_levels, colors='crimson', linewidths=3, linestyles='dashdot')
+    contour = ax1.contour(X_test_array[0][0], levels=contour_levels, colors='black', linewidths=3, linestyles='dashed')
     labels = plt.clabel(contour, inline=True, fontsize=20, fmt='%1.0f K')
     for label, color in zip(labels, label_colors): label.set_fontweight('bold');label.set_color(color) 
 
     contour_level_LIQ = [0.8]
-    contour_LIQ = ax1.contour(y_test[0][0], levels=contour_level_LIQ, colors='orangered', linestyles='--', linewidths=8,)
+    contour_LIQ = ax1.contour(y_test[0][0], levels=contour_level_LIQ, colors='orangered', linestyles='-', linewidths=6,)
 
 
     cmap = plt.get_cmap('RdYlGn_r')
