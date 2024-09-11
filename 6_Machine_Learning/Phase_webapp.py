@@ -241,7 +241,7 @@ if option == 0:
        
 
     else:
-        st.write("Please upload the Temperature Distribution 2D numpy array.")
+        st.write("Please upload the Temperature Distribution 2D numpy array (format: height by width).")
 
 elif option == 1:
     X_test_array = np.load('6_Machine_Learning/data/X_test.npy')
