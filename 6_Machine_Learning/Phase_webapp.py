@@ -305,6 +305,8 @@ elif option == 1:
     ax2.set_ylim(201, -1);  ax2.set_xlim(-1,401)
     ax2.spines[:].set_linewidth(4)
 
+    st.divider()
+    
     fig2, (ax3, ax4) = plt.subplots(2, 1, figsize=(12, 8))
     cmap = plt.get_cmap('RdYlGn_r')
     cmap.set_under('white', alpha=0)
