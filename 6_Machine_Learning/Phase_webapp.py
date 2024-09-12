@@ -276,7 +276,7 @@ elif option == 1:
     cmap = plt.get_cmap('RdYlBu_r')
     cmap.set_under('white', alpha=0)
     hmap1 = ax1.imshow(X_test_array[0][0], cmap='RdYlBu_r', vmin=300, aspect=0.5,  interpolation='quadric')
-    ax1.set_title('Thermal Hisotry', pad=80, loc='left', fontsize=25, weight='bold')
+    ax1.set_title('Thermal Hisotry (FEM)', pad=80, loc='left', fontsize=25, weight='bold')
     ax1.set_xlabel('$\mathbf{\longleftarrow}$                 1000 $ \mathbf{\mu m}$                $\mathbf{\longrightarrow}$', fontsize = 27, weight ='bold',)
     ax1.annotate(r'$\mathbf{\leftarrow}$ 250 $\mathbf{\mu m}$ $\mathbf{\rightarrow}$', xy=(0.5, 0.5), xytext=(-0.025, 0.5), rotation=90, xycoords='axes fraction', textcoords='axes fraction', fontsize = 22, weight = 'bold', color='k', ha='center', va='center')
     ax1.tick_params(axis='both', labelcolor='black', labelsize=65, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
@@ -320,7 +320,7 @@ elif option == 1:
     ax3.tick_params(axis='both', labelcolor='black', labelsize=65, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
     ax3.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax3.set_ylim(201, -1);  ax2.set_xlim(-1,401)
-    ax3.set_title('Simulation Result', pad=80, loc='left', fontsize=25, weight='bold')
+    ax3.set_title('Phase Evolution (FEM)', pad=80, loc='left', fontsize=25, weight='bold')
     ax3.set_xlabel('$\mathbf{\longleftarrow}$                 1000 $ \mathbf{\mu m}$                $\mathbf{\longrightarrow}$', fontsize = 27, weight ='bold', color='none')
     ax3.annotate(r'$\mathbf{\leftarrow}$ 250 $\mathbf{\mu m}$ $\mathbf{\rightarrow}$', xy=(0.5, 0.5), xytext=(-0.025, 0.5), rotation=90, xycoords='axes fraction', textcoords='axes fraction', fontsize = 22, weight = 'bold', color='none', ha='center', va='center')
     ax3.spines[:].set_linewidth(4)
@@ -340,7 +340,7 @@ elif option == 1:
     ax4.tick_params(axis='both', labelcolor='black', labelsize=65, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
     ax4.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='none', length_includes_head=True, clip_on=False)
     ax4.set_ylim(201, -1);  ax2.set_xlim(-1,401)
-    ax4.set_title('ML Predicted', pad=10, loc='left', fontsize=25, weight='bold')
+    ax4.set_title('Phase Evolution (ML Prediction)', pad=10, loc='left', fontsize=25, weight='bold')
     ax4.spines[:].set_linewidth(4)
 
     contour_levels = [450, 700,  1337]
