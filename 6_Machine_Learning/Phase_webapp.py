@@ -50,25 +50,69 @@ class UNet(nn.Module):
                 nn.ReLU(inplace=True)
             )
 
-        self.encoder1 = conv_block(in_channels, 64)
-        self.encoder2 = conv_block(64, 128)
-        self.encoder3 = conv_block(128, 256)
-        self.encoder4 = conv_block(256, 512)
+        # Reduced number of filters to make the network ultra-light
+        self.encoder1 = conv_block(in_channels, 32)
+        self.encoder2 = conv_block(32, 64)
+        self.encoder3 = conv_block(64, 128)
+        self.encoder4 = conv_block(128, 256)
 
         self.pool = nn.MaxPool2d(2)
 
-        self.middle = conv_block(512, 1024)
+        self.middle = conv_block(256, 512)
 
-        self.upconv4 = nn.ConvTranspose2d(1024, 512, kernel_size=2, stride=2)
-        self.decoder4 = conv_block(1024, 512)
-        self.upconv3 = nn.ConvTranspose2d(512, 256, kernel_size=2, stride=2)
-        self.decoder3 = conv_block(512, 256)
-        self.upconv2 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=2)
-        self.decoder2 = conv_block(256, 128)
-        self.upconv1 = nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2)
-        self.decoder1 = conv_block(128, 64)
+        self.upconv4 = nn.ConvTranspose2d(512, 256, kernel_size=2, stride=2)
+        self.decoder4 = conv_block(512, 256)
+        self.upconv3 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=2)
+        self.decoder3 = conv_block(256, 128)
+        self.upconv2 = nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2)
+        self.decoder2 = conv_block(128, 64)
+        self.upconv1 = nn.ConvTranspose2d(64, 32, kernel_size=2, stride=2)
+        self.decoder1 = conv_block(64, 32)
 
-        self.final = nn.Conv2d(64, out_channels, kernel_size=1)
+        self.final = nn.Conv2d(32, out_channels, kernel_size=1)
+
+        ##########################################
+        # Further reduced number of filters to make the network ultra-light
+        # self.encoder1 = conv_block(in_channels, 16)
+        # self.encoder2 = conv_block(16, 32)
+        # self.encoder3 = conv_block(32, 64)
+        # self.encoder4 = conv_block(64, 128)
+
+        # self.pool = nn.MaxPool2d(2)
+
+        # self.middle = conv_block(128, 256)
+
+        # self.upconv4 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=2)
+        # self.decoder4 = conv_block(256, 128)
+        # self.upconv3 = nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2)
+        # self.decoder3 = conv_block(128, 64)
+        # self.upconv2 = nn.ConvTranspose2d(64, 32, kernel_size=2, stride=2)
+        # self.decoder2 = conv_block(64, 32)
+        # self.upconv1 = nn.ConvTranspose2d(32, 16, kernel_size=2, stride=2)
+        # self.decoder1 = conv_block(32, 16)
+
+        # self.final = nn.Conv2d(16, out_channels, kernel_size=1)
+        ##########################################
+
+        # self.encoder1 = conv_block(in_channels, 64)
+        # self.encoder2 = conv_block(64, 128)
+        # self.encoder3 = conv_block(128, 256)
+        # self.encoder4 = conv_block(256, 512)
+
+        # self.pool = nn.MaxPool2d(2)
+
+        # self.middle = conv_block(512, 1024)
+
+        # self.upconv4 = nn.ConvTranspose2d(1024, 512, kernel_size=2, stride=2)
+        # self.decoder4 = conv_block(1024, 512)
+        # self.upconv3 = nn.ConvTranspose2d(512, 256, kernel_size=2, stride=2)
+        # self.decoder3 = conv_block(512, 256)
+        # self.upconv2 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=2)
+        # self.decoder2 = conv_block(256, 128)
+        # self.upconv1 = nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2)
+        # self.decoder1 = conv_block(128, 64)
+
+        # self.final = nn.Conv2d(64, out_channels, kernel_size=1)
 
     def forward(self, x):
         enc1 = self.encoder1(x)
@@ -153,21 +197,21 @@ optimizer = optim.Adam(model.parameters(), lr=1e-4)
 # model.eval()
 
 # Load the state dict model for inference only
-# model.load_state_dict(torch.load('6_Machine_Learning/trained_model/model.pth'))
+model.load_state_dict(torch.load('6_Machine_Learning/trained_model/model.pth'))
 
 # Function to join split files
-def join_files(output_file, parts_dir, parts):
-    with open(output_file, 'wb') as outfile:
-        for part in parts:
-            part_path = os.path.join(parts_dir, part)
-            with open(part_path, 'rb') as infile:
-                outfile.write(infile.read())
+# def join_files(output_file, parts_dir, parts):
+#     with open(output_file, 'wb') as outfile:
+#         for part in parts:
+#             part_path = os.path.join(parts_dir, part)
+#             with open(part_path, 'rb') as infile:
+#                 outfile.write(infile.read())
 
-parts_dir = '6_Machine_Learning/trained_model'
-parts = ['model_part_aa', 'model_part_ab', 'model_part_ac', 'model_part_ad','model_part_ae']
-output_file = 'model.pth'
-join_files(output_file, parts_dir, parts)
-model.load_state_dict(torch.load(output_file))
+# parts_dir = '6_Machine_Learning/trained_model'
+# parts = ['model_part_aa', 'model_part_ab', 'model_part_ac', 'model_part_ad','model_part_ae']
+# output_file = 'model.pth'
+# join_files(output_file, parts_dir, parts)
+# model.load_state_dict(torch.load(output_file))
 
 model.eval()
 
