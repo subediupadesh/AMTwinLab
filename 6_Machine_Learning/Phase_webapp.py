@@ -94,6 +94,7 @@ class UNet(nn.Module):
         # self.final = nn.Conv2d(16, out_channels, kernel_size=1)
         ##########################################
 
+        ## Highest Paramterer Model
         # self.encoder1 = conv_block(in_channels, 64)
         # self.encoder2 = conv_block(64, 128)
         # self.encoder3 = conv_block(128, 256)
