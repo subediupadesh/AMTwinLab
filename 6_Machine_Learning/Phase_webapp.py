@@ -364,7 +364,7 @@ elif option == 1:
     hmap3b = ax3.imshow(1-y_test[0][0], cmap=cmap, vmin=0.5, vmax=1.5, aspect=0.5, interpolation='quadric')
     ax3.tick_params(axis='both', labelcolor='black', labelsize=65, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
     ax3.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
-    ax3.set_ylim(201, -1);  ax2.set_xlim(-1,401)
+    ax3.set_ylim(201, -1);  ax3.set_xlim(-1,401)
     ax3.set_title('Phase Evolution (FEM)', pad=80, loc='left', fontsize=25, weight='bold')
     ax3.set_xlabel('$\mathbf{\longleftarrow}$                 1000 $ \mathbf{\mu m}$                $\mathbf{\longrightarrow}$', fontsize = 27, weight ='bold', color='none')
     ax3.annotate(r'$\mathbf{\leftarrow}$ 250 $\mathbf{\mu m}$ $\mathbf{\rightarrow}$', xy=(0.5, 0.5), xytext=(-0.025, 0.5), rotation=90, xycoords='axes fraction', textcoords='axes fraction', fontsize = 22, weight = 'bold', color='none', ha='center', va='center')
@@ -384,7 +384,7 @@ elif option == 1:
     hmap4b = ax4.imshow(1-prediction[0][0], cmap=cmap, vmin=0.5, vmax=1.5, aspect=0.5, interpolation='quadric')
     ax4.tick_params(axis='both', labelcolor='black', labelsize=65, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
     ax4.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='none', length_includes_head=True, clip_on=False)
-    ax4.set_ylim(201, -1);  ax2.set_xlim(-1,401)
+    ax4.set_ylim(201, -1);  ax4.set_xlim(-1,401)
     ax4.set_title('Phase Evolution (ML Prediction)', pad=10, loc='left', fontsize=25, weight='bold')
     ax4.spines[:].set_linewidth(4)
 
