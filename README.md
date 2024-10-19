@@ -171,3 +171,16 @@
     </td>
   </tr>
 </table>
+
+
+
+## Machine Learning Model Prediction
+
+<table>
+  <tr>
+    <td>
+      <strong>Machine Learning | Phase-Field | FEM </strong><br>
+      <img src="3_Simulation_Video_Animation/video_animations/ML_Pred/gif/Comparison.gif" alt="Comparison Animation" width="800"/>
+    </td>
+  </tr>
+</table>
