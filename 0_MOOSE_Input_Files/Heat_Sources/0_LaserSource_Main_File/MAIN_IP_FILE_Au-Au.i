@@ -210,8 +210,8 @@
 
     [mu_values]
         type = GenericConstantMaterial
-        prop_names = 'pseudo_mu1       mu2'  # mu_m ==> mushy zone
-        prop_values = '9.33743418e-04  3.11e-0' 
+        prop_names = 'pseudo_mu1    mu2'  # mu_m ==> mushy zone
+        prop_values = '0.81955      9.11' 
     []
 
     [mu_LIQ]
@@ -219,7 +219,7 @@
         property_name = mu1
         material_property_names = 'pseudo_mu1'
         constant_names = 'Q_mu'
-        constant_expressions = '2200'
+        constant_expressions = '2669'
         coupled_variables = 'temp'
         expression = 'pseudo_mu1*exp(Q_mu/temp)' # https://link.springer.com/article/10.1007/s10765-016-2104-7
     []
