@@ -703,13 +703,13 @@ gravity             = ${fparse -9.81 * length_scale/time_scale^2}
 [Outputs]
    exodus                   = true
    time_step_interval       = 1
-   file_base                = 'exodus/Au-Au'
+   file_base                = 'exodus/ThermoPhaseFluid/TPF'
    csv = true
    [my_checkpoint]
        type                 = Checkpoint
        num_files            = 2
        time_step_interval   = 2
-       file_base            = 'exodus/Au-Au'
+       file_base            = 'exodus/ThermoPhaseFluid/TPF'
    []
 []
 
