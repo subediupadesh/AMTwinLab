@@ -189,7 +189,7 @@
   <tr>
     <td>
       <strong>Machine Learning | Phase-Field | FEM </strong><br>
-      <img src="3_Simulation_Video_Animation/video_animations/ML_Pred/gif/Comparison.gif" alt="Comparison Animation" width="800"/>
+      <!-- <img src="3_Simulation_Video_Animation/video_animations/ML_Pred/gif/Comparison.gif" alt="Comparison Animation" width="800"/> -->
       <strong>FN: False Negative | CP: Correct Prediction | FP: False Positive </strong><br>
     </td>
   </tr>
