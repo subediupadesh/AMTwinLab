@@ -14,7 +14,6 @@ import streamlit as st
 st.set_page_config(layout="wide", page_title="Phase & Velocity Prediction Viewer")
 
 device = "cpu"
-# path = os.path.abspath('../..')
 base_dir = os.path.dirname(os.path.abspath(__file__))
 root_path = os.path.join(base_dir, "..", "..",)
 # st.write(root_path)
@@ -94,15 +93,6 @@ def Test_Data_Prediction():
     st.header("Prediction for Test Data: All Beams")
     Laser_type = st.selectbox("Select Laser Type", ("Gaussian", "FlatTop", "Bessel", "Ring"), index=2)
     t_step = st.slider("Select time step", 0, 12, 8)
-
-    # st.write(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')
-
-    # file_path = os.path.join(base_dir, "..", "..",)
-    # file_path = os.path.normpath(file_path)  
-    # st.write(base_dir)
-    # st.write(file_path)
-    # time = np.load(root_path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
-    
     time = np.load(root_path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
@@ -157,7 +147,7 @@ def Test_Data_Prediction():
     ax1.tick_params(axis='both', bottom=False, left=False, labelbottom=False, labelleft=False)
     ax1.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax1.set_ylim(201, -1);  ax1.set_xlim(-1,401)
-    ax1.set_title(r't='+f'{time:.2f} s', pad=80, loc='left', fontsize=35, weight='bold', fontname='ADLaM Display')
+    ax1.set_title(r't='+f'{time:.2f} s', pad=80, loc='left', fontsize=35, weight='bold', ) ##  fontname='ADLaM Display')
     contour_levels = [450, 700, 1337]
     label_colors = ['white', 'yellow', 'red']
     contour = ax1.contour(temperature, levels=contour_levels, colors='black', linewidths=3, linestyles='dashed')
@@ -181,7 +171,7 @@ def Test_Data_Prediction():
     ax2.tick_params(axis='both', bottom=False, left=False, labelbottom=False, labelleft=False)
     ax2.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='none', length_includes_head=True, clip_on=False)
     ax2.set_ylim(201, -1);  ax4.set_xlim(-1,401)
-    # ax2.set_title('FEM', pad=10, loc='center', fontsize=35, weight='bold', fontname='ADLaM Display')
+    # ax2.set_title('FEM', pad=10, loc='center', fontsize=35, weight='bold', ) ##  fontname='ADLaM Display')
     ax2.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax2.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')   
     ax2.spines[:].set_linewidth(4)
@@ -202,7 +192,7 @@ def Test_Data_Prediction():
     ax3.tick_params(axis='both', bottom=False, left=False, labelbottom=False, labelleft=False)
     ax3.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='none', length_includes_head=True, clip_on=False)
     ax3.set_ylim(201, -1);  ax3.set_xlim(-1,401)
-    # ax3.set_title('ML', pad=10, loc='center', fontsize=35, weight='bold', fontname='ADLaM Display')
+    # ax3.set_title('ML', pad=10, loc='center', fontsize=35, weight='bold', ) ##  fontname='ADLaM Display')
     ax3.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax3.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')
     ax3.spines[:].set_linewidth(4)
@@ -217,7 +207,7 @@ def Test_Data_Prediction():
     cmap = plt.get_cmap('RdYlGn_r')
     cmap.set_under('white', alpha=0)
     hmap4 = ax4.imshow(pred_error, cmap=cmap, vmin=-1, vmax=1, aspect=0.5)
-    # ax4.set_title('Error', pad=10, loc='center', fontsize=35, weight='bold', fontname='ADLaM Display')
+    # ax4.set_title('Error', pad=10, loc='center', fontsize=35, weight='bold', ) ##  fontname='ADLaM Display')
     ax4.tick_params(axis='both', bottom=False, left=False, labelbottom=False, labelleft=False)
     ax4.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax4.set_ylim(201, -1);  ax1.set_xlim(-1,401)
@@ -225,7 +215,7 @@ def Test_Data_Prediction():
     ax4a = fig.add_axes([0.907, 0.541, 0.02, 0.108])
     cbar = fig.colorbar(hmap4, cax=ax4a, orientation='vertical')
     cbar.ax.tick_params(labelsize=20, direction='inout', length=20, width=5, rotation=0) 
-    cbar.set_ticks([-0.97,0,0.97], labels=['FN','CP','FP'], weight='bold', color='black', size=25, fontname='ADLaM Display')
+    cbar.set_ticks([-0.97,0,0.97], labels=['FN','CP','FP'], weight='bold', color='black', size=25, ) ##  fontname='ADLaM Display')
     ax4a.spines[:].set_linewidth(0)
     
     hmap5 = ax5.imshow(pred_vel, cmap='gist_ncar_r', aspect=0.5,  interpolation='bilinear')
@@ -233,7 +223,7 @@ def Test_Data_Prediction():
     ax5.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax5.set_ylim(201, -1);  ax5.set_xlim(-1,401)
     ax5.spines[:].set_linewidth(4)
-    # ax5.set_title('ML', pad=10, loc='center', fontsize=35, weight='bold', fontname='ADLaM Display')
+    # ax5.set_title('ML', pad=10, loc='center', fontsize=35, weight='bold', ) ##  fontname='ADLaM Display')
     ax5.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')
     ax5a = fig.add_axes([0.485, 0.341, 0.02, 0.108])
     ax5a.tick_params(axis='both', labelcolor='black', labelsize=1, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
@@ -249,7 +239,7 @@ def Test_Data_Prediction():
     ax6.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax6.set_ylim(201, -1);  ax5.set_xlim(-1,401)
     ax6.spines[:].set_linewidth(4)
-    # ax6.set_title('FEM', pad=10, loc='center', fontsize=35, weight='bold', fontname='ADLaM Display')
+    # ax6.set_title('FEM', pad=10, loc='center', fontsize=35, weight='bold', ) ##  fontname='ADLaM Display')
     ax6.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')
     ax6a = fig.add_axes([0.907, 0.341, 0.02, 0.108])
     ax6a.tick_params(axis='both', labelcolor='black', labelsize=1, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
@@ -265,7 +255,7 @@ def Test_Data_Prediction():
     ax7.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax7.set_ylim(201, -1);  ax5.set_xlim(-1,401)
     ax7.spines[:].set_linewidth(4)
-    # ax7.set_title('Error', pad=10, loc='center', fontsize=35, weight='bold', fontname='ADLaM Display')
+    # ax7.set_title('Error', pad=10, loc='center', fontsize=35, weight='bold', ) ##  fontname='ADLaM Display')
     ax7.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')
     ax7a = fig.add_axes([0.485, 0.14, 0.02, 0.108])
     ax7a.tick_params(axis='both', labelcolor='black', labelsize=1, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
@@ -285,18 +275,18 @@ def Test_Data_Prediction():
     ax8.tick_params(axis='both', bottom=False, left=False, labelbottom=False, labelleft=False)
     ax8.spines[:].set_linewidth(0)
     
-    ax8.text(0.1, 0.8, f'FEM Calculated LIQUID Area: {Liq_Area_GT:.0f}'+r'$\mathbf{\mu m^2}$', size=30, color='green', weight='bold', rotation=0, fontname='Play')
-    ax8.text(0.1, 0.5, f'ML     Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=30, color='blue', weight='bold', rotation=0, fontname='Play')
-    ax8.text(0.1, 0.2, f'Area Prediction Error: {Perc_Area_Diff:.2f}%', size=30, color='red', weight='bold', rotation=0, fontname='Play')
+    ax8.text(0.1, 0.8, f'FEM Calculated LIQUID Area: {Liq_Area_GT:.0f}'+r'$\mathbf{\mu m^2}$', size=30, color='green', weight='bold', rotation=0, )  ## fontname='Play')
+    ax8.text(0.1, 0.5, f'ML     Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=30, color='blue', weight='bold', rotation=0, )  ## fontname='Play')
+    ax8.text(0.1, 0.2, f'Area Prediction Error: {Perc_Area_Diff:.2f}%', size=30, color='red', weight='bold', rotation=0, )  ## fontname='Play')
     
     
-    ax1.text(0, 240, r'(a) T-Distribution', size=30, weight='bold', rotation=0, fontname='Play')
-    ax2.text(2, 190, r'(b) Phase Evolution (FEM)', size=30, weight='bold', rotation=0, fontname='Play')
-    ax3.text(2, 190, r'(c) Predicted Phase (ML)', size=30, weight='bold', rotation=0, fontname='Play')
-    ax4.text(2, 190, r'(d) Phase Prediction Error', size=30, weight='bold', rotation=0, fontname='Play')
-    ax5.text(2, 190, r'(e) Predicted Velocity (ML)', size=30, weight='bold', rotation=0, fontname='Play')
-    ax6.text(2, 190, r'(f) Meltpool Velocity (FEM)', size=30, weight='bold', rotation=0, fontname='Play')
-    ax7.text(2, 185, r'(g) Velocity Prediction Error', size=30, weight='bold', rotation=0, fontname='Play')
+    ax1.text(0, 240, r'(a) T-Distribution', size=30, weight='bold', rotation=0, )  ## fontname='Play')
+    ax2.text(2, 190, r'(b) Phase Evolution (FEM)', size=30, weight='bold', rotation=0, )  ## fontname='Play')
+    ax3.text(2, 190, r'(c) Predicted Phase (ML)', size=30, weight='bold', rotation=0, )  ## fontname='Play')
+    ax4.text(2, 190, r'(d) Phase Prediction Error', size=30, weight='bold', rotation=0, )  ## fontname='Play')
+    ax5.text(2, 190, r'(e) Predicted Velocity (ML)', size=30, weight='bold', rotation=0, )  ## fontname='Play')
+    ax6.text(2, 190, r'(f) Meltpool Velocity (FEM)', size=30, weight='bold', rotation=0, )  ## fontname='Play')
+    ax7.text(2, 185, r'(g) Velocity Prediction Error', size=30, weight='bold', rotation=0, )  ## fontname='Play')
     
     fig.text(0.44, 0.9, f'{Laser_type} HS', size=50, weight='bold', rotation=0, fontname='Play', color ='red')
     
@@ -349,7 +339,7 @@ def run_prediction_step(t_step):
     ax1.tick_params(axis='both', bottom=False, left=False, labelbottom=False, labelleft=False)
     ax1.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax1.set_ylim(201, -1);  ax1.set_xlim(-1,401)
-    ax1.set_title(r't='+f'{time:.2f} s', pad=80, loc='left', fontsize=35, weight='bold', fontname='ADLaM Display')
+    ax1.set_title(r't='+f'{time:.2f} s', pad=80, loc='left', fontsize=35, weight='bold', ) ##  fontname='ADLaM Display')
     contour_levels = [450, 700, 1337]
     label_colors = ['white', 'yellow', 'red']
     contour = ax1.contour(temperature, levels=contour_levels, colors='black', linewidths=3, linestyles='dashed')
@@ -373,7 +363,7 @@ def run_prediction_step(t_step):
     ax2.tick_params(axis='both', bottom=False, left=False, labelbottom=False, labelleft=False)
     ax2.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='none', length_includes_head=True, clip_on=False)
     ax2.set_ylim(201, -1);  ax4.set_xlim(-1,401)
-    # ax2.set_title('FEM', pad=10, loc='center', fontsize=35, weight='bold', fontname='ADLaM Display')
+    # ax2.set_title('FEM', pad=10, loc='center', fontsize=35, weight='bold', ) ##  fontname='ADLaM Display')
     ax2.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax2.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')   
     ax2.spines[:].set_linewidth(4)
@@ -406,10 +396,10 @@ def run_prediction_step(t_step):
     ax3.tick_params(axis='both', bottom=False, left=False, labelbottom=False, labelleft=False)
     ax3.spines[:].set_linewidth(0)
     
-    ax1.text(10, 260, r'Input T-Data', size=50, weight='bold', rotation=0, fontname='Play')
-    ax2.text(10, 180, r'ML Pred. Phase', size=50, weight='bold', rotation=0, fontname='Play')
-    ax3.text(0.15, 0.45, f'Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=40, weight='bold', rotation=0, fontname='Play')
-    ax4.text(10, 180, r'ML Pred. Velocity', size=50, weight='bold', rotation=0, fontname='Play')
+    ax1.text(10, 260, r'Input T-Data', size=50, weight='bold', rotation=0, )  ## fontname='Play')
+    ax2.text(10, 180, r'ML Pred. Phase', size=50, weight='bold', rotation=0, )  ## fontname='Play')
+    ax3.text(0.15, 0.45, f'Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=40, weight='bold', rotation=0, )  ## fontname='Play')
+    ax4.text(10, 180, r'ML Pred. Velocity', size=50, weight='bold', rotation=0, )  ## fontname='Play')
 
 
     # -----------------------------------------------
@@ -554,10 +544,10 @@ def UserUploaded_T_Data_Prediction():
     ax3.tick_params(axis='both', bottom=False, left=False, labelbottom=False, labelleft=False)
     ax3.spines[:].set_linewidth(0)
     
-    ax1.text(10, 260, r'Input T-Data', size=50, weight='bold', rotation=0, fontname='Play')
-    ax2.text(10, 180, r'ML Pred. Phase', size=50, weight='bold', rotation=0, fontname='Play')
-    ax3.text(0.15, 0.45, f'Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=40, weight='bold', rotation=0, fontname='Play')
-    ax4.text(10, 180, r'ML Pred. Velocity', size=50, weight='bold', rotation=0, fontname='Play')
+    ax1.text(10, 260, r'Input T-Data', size=50, weight='bold', rotation=0, )  ## fontname='Play')
+    ax2.text(10, 180, r'ML Pred. Phase', size=50, weight='bold', rotation=0, )  ## fontname='Play')
+    ax3.text(0.15, 0.45, f'Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=40, weight='bold', rotation=0, )  ## fontname='Play')
+    ax4.text(10, 180, r'ML Pred. Velocity', size=50, weight='bold', rotation=0, )  ## fontname='Play')
 
     # plt.show()
 
