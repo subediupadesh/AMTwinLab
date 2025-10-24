@@ -15,11 +15,12 @@ st.set_page_config(layout="wide", page_title="Phase & Velocity Prediction Viewer
 
 device = "cpu"
 path = os.path.abspath('../..')
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 st.write("Current working directory:", os.getcwd())
 st.write("Files in current directory:", os.listdir())
-st.write("Value of path:", path)
+st.write("Value of path:", base_dir)
 
 # -----------------------------------------------
 # Model Definition
