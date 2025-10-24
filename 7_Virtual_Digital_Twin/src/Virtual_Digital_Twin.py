@@ -398,7 +398,7 @@ def run_prediction_step(t_step):
     
     ax1.text(10, 260, r'Input T-Data', size=50, weight='bold', rotation=0, )  ## fontname='Play')
     ax2.text(10, 180, r'ML Pred. Phase', size=50, weight='bold', rotation=0, )  ## fontname='Play')
-    ax3.text(0.15, 0.45, f'Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=40, weight='bold', rotation=0, )  ## fontname='Play')
+    ax3.text(0.15, 0.45, f'Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=30, weight='bold', rotation=0, )  ## fontname='Play')
     ax4.text(10, 180, r'ML Pred. Velocity', size=50, weight='bold', rotation=0, )  ## fontname='Play')
 
 
@@ -546,7 +546,7 @@ def UserUploaded_T_Data_Prediction():
     
     ax1.text(10, 260, r'Input T-Data', size=50, weight='bold', rotation=0, )  ## fontname='Play')
     ax2.text(10, 180, r'ML Pred. Phase', size=50, weight='bold', rotation=0, )  ## fontname='Play')
-    ax3.text(0.15, 0.45, f'Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=40, weight='bold', rotation=0, )  ## fontname='Play')
+    ax3.text(0.15, 0.45, f'Predicted  LIQUID Area: {Liq_Area_Pred:.0f}'+r'$\mathbf{\mu m^2}$', size=30, weight='bold', rotation=0, )  ## fontname='Play')
     ax4.text(10, 180, r'ML Pred. Velocity', size=50, weight='bold', rotation=0, )  ## fontname='Play')
 
     # plt.show()
