@@ -14,6 +14,7 @@ import streamlit as st
 st.set_page_config(layout="wide", page_title="Phase & Velocity Prediction Viewer")
 
 device = "cpu"
+path = os.path.abspath('../..')
 
 # -----------------------------------------------
 # Model Definition
@@ -94,9 +95,9 @@ def Test_Data_Prediction():
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
     
-    temperature = np.load(f'../Test_Data/individual_temp_data/{Laser_type}_temp_{t_step}.npy')[0]
-    phase = np.load(f'../Test_Data/individual_phase_data/{Laser_type}_phase_{t_step}.npy')[0]
-    velocity = np.load(f'../Test_Data/individual_vel_data/{Laser_type}_vel_{t_step}.npy')[0]
+    temperature = np.load(path+f'/7_Virtual_Digital_Twin/Test_Data/individual_temp_data/{Laser_type}_temp_{t_step}.npy')[0]
+    phase = np.load(path+f'/7_Virtual_Digital_Twin/Test_Data/individual_phase_data/{Laser_type}_phase_{t_step}.npy')[0]
+    velocity = np.load(path+f'/7_Virtual_Digital_Twin/Test_Data/individual_vel_data/{Laser_type}_vel_{t_step}.npy')[0]
     
     temp_mean, temp_std , eps = 622.8411254882812, 433.029052734375, 1e-8
     temperature_norm = (temperature - temp_mean) / (temp_std + eps)
@@ -105,8 +106,8 @@ def Test_Data_Prediction():
     # Phase Prediction
     # -----------------------------------------------
     model_PN = PhaseVelNet(in_channels=1, out_channels=1).to(device)
-    # state = torch.load("../../6_Trained_ML_Models/Trained_Models/PhaseNet.pt", weights_only=False, map_location=device)
-    state = torch.load("PhaseNet.pt", weights_only=False, map_location=device)
+    # state = torch.load(path+f'/6_Trained_ML_Models/Trained_Models/PhaseNet.pt", weights_only=False, map_location=device)
+    state = torch.load(path+"/7_Virtual_Digital_Twin/src/PhaseNet.pt", weights_only=False, map_location=device)
     model_PN.load_state_dict(state)
     
     temperature_norm = torch.tensor(temperature_norm, dtype=torch.float32)[np.newaxis, np.newaxis, :, :]
@@ -118,8 +119,8 @@ def Test_Data_Prediction():
     # Velocity Prediction
     # -----------------------------------------------
     model_VN = PhaseVelNet(in_channels=2, out_channels=1).to(device)
-    # model_VN.load_state_dict(torch.load("../../6_Trained_ML_Models/Trained_Models/VelNet.pt", map_location="cpu", weights_only=True))
-    model_VN.load_state_dict(torch.load("VelNet.pt", map_location="cpu", weights_only=True))
+    # model_VN.load_state_dict(torch.load(path+f'/6_Trained_ML_Models/Trained_Models/VelNet.pt", map_location="cpu", weights_only=True))
+    model_VN.load_state_dict(torch.load(path+"/7_Virtual_Digital_Twin/src/VelNet.pt", map_location="cpu", weights_only=True))
     Input_TempVel = np.stack([temperature_norm[0], phase[np.newaxis]], axis=1)
     Input_TempVel = torch.tensor(Input_TempVel, dtype=torch.float32)
     with torch.no_grad():
@@ -307,21 +308,21 @@ def run_prediction_step(t_step):
     Everything related to data loading, model inference, and plotting goes here.
     """
     st.write(f"🧩 Running prediction for t_step = {t_step}")
-    time = np.load(f'../Unknown_Data/Bessel_time.npy')[t_step]
+    time = np.load(path+f'/7_Virtual_Digital_Twin/Unknown_Data/Bessel_time.npy')[t_step]
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
-    temperature = np.load(f'../Unknown_Data/individual_temp_data/Bessel_temp_{t_step}.npy')[0]
+    temperature = np.load(path+f'/7_Virtual_Digital_Twin/Unknown_Data/individual_temp_data/Bessel_temp_{t_step}.npy')[0]
     temp_mean, temp_std , eps = 622.8411254882812, 433.029052734375, 1e-8
     temperature_norm = (temperature - temp_mean) / (temp_std + eps)
     model_PN = PhaseVelNet(in_channels=1, out_channels=1).to(device)
-    # state = torch.load("../../6_Trained_ML_Models/Trained_Models/PhaseNet.pt", weights_only=False, map_location=device)
-    state = torch.load("PhaseNet.pt", weights_only=False, map_location=device)
+    # state = torch.load(path+"/6_Trained_ML_Models/Trained_Models/PhaseNet.pt", weights_only=False, map_location=device)
+    state = torch.load(path+"/7_Virtual_Digital_Twin/src/PhaseNet.pt", weights_only=False, map_location=device)
     model_PN.load_state_dict(state)
     temperature_norm = torch.tensor(temperature_norm, dtype=torch.float32)[np.newaxis, np.newaxis, :, :]
     pred_phase = (torch.sigmoid(model_PN(temperature_norm)) > 0.5).float().numpy()[0]
     model_VN = PhaseVelNet(in_channels=2, out_channels=1).to(device)
-    # model_VN.load_state_dict(torch.load("../../6_Trained_ML_Models/Trained_Models/VelNet.pt", map_location="cpu", weights_only=True))
-    model_VN.load_state_dict(torch.load("VelNet.pt", map_location="cpu", weights_only=True))
+    # model_VN.load_state_dict(torch.load(path+"/6_Trained_ML_Models/Trained_Models/VelNet.pt", map_location="cpu", weights_only=True))
+    model_VN.load_state_dict(torch.load(path+"/7_Virtual_Digital_Twin/src/VelNet.pt", map_location="cpu", weights_only=True))
     Input_TempVel = np.stack([temperature_norm[0], pred_phase], axis=1)
     Input_TempVel = torch.tensor(Input_TempVel, dtype=torch.float32)
     with torch.no_grad():
@@ -469,13 +470,13 @@ def UserUploaded_T_Data_Prediction():
     temperature_norm = (temperature - temp_mean) / (temp_std + eps)
     model_PN = PhaseVelNet(in_channels=1, out_channels=1).to(device)
     # state = torch.load("../../6_Trained_ML_Models/Trained_Models/PhaseNet.pt", weights_only=False, map_location=device)
-    state = torch.load("PhaseNet.pt", weights_only=False, map_location=device)
+    state = torch.load(path+"/7_Virtual_Digital_Twin/src/PhaseNet.pt", weights_only=False, map_location=device)
     model_PN.load_state_dict(state)
     temperature_norm = torch.tensor(temperature_norm, dtype=torch.float32)[np.newaxis, np.newaxis, :, :]
     pred_phase = (torch.sigmoid(model_PN(temperature_norm)) > 0.5).float().numpy()[0]
     model_VN = PhaseVelNet(in_channels=2, out_channels=1).to(device)
     # model_VN.load_state_dict(torch.load("../../6_Trained_ML_Models/Trained_Models/VelNet.pt", map_location="cpu", weights_only=True))
-    model_VN.load_state_dict(torch.load("VelNet.pt", map_location="cpu", weights_only=True))
+    model_VN.load_state_dict(torch.load(path+"/7_Virtual_Digital_Twin/src/VelNet.pt", map_location="cpu", weights_only=True))
     Input_TempVel = np.stack([temperature_norm[0], pred_phase], axis=1)
     Input_TempVel = torch.tensor(Input_TempVel, dtype=torch.float32)
     with torch.no_grad():
