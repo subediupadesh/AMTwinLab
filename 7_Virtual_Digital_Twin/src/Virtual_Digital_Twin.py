@@ -96,9 +96,8 @@ def Test_Data_Prediction():
     Laser_type = st.selectbox("Select Laser Type", ("Gaussian", "FlatTop", "Bessel", "Ring"), index=2)
     t_step = st.slider("Select time step", 0, 12, 8)
 
-    st.write(f'../../7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')
-    # time = np.load(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
-    time = np.load(f'../../7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
+    st.write(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')
+    time = np.load(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
     
@@ -315,8 +314,7 @@ def run_prediction_step(t_step):
     Everything related to data loading, model inference, and plotting goes here.
     """
     st.write(f"🧩 Running prediction for t_step = {t_step}")
-    # time = np.load(path+f'/7_Virtual_Digital_Twin/Unknown_Data/Bessel_time.npy')[t_step]
-    time = np.load(f'../../7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
+    time = np.load(path+f'/7_Virtual_Digital_Twin/Unknown_Data/Bessel_time.npy')[t_step]
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
     temperature = np.load(path+f'/7_Virtual_Digital_Twin/Unknown_Data/individual_temp_data/Bessel_temp_{t_step}.npy')[0]
