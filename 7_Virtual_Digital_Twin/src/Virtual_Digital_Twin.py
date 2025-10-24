@@ -98,7 +98,13 @@ def Test_Data_Prediction():
     t_step = st.slider("Select time step", 0, 12, 8)
 
     st.write(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')
-    time = np.load(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
+    
+    file_path = os.path.join(base_dir, "..", "Test_Data", f"{Laser_type}_time.npy")
+    file_path = os.path.normpath(file_path)  # cleans up ../
+    st.write(file_path)
+    time = np.load(file_path)[t_step]
+    
+    # time = np.load(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
     
