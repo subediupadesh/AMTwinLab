@@ -15,6 +15,7 @@ st.set_page_config(layout="wide", page_title="Phase & Velocity Prediction Viewer
 
 device = "cpu"
 path = os.path.abspath('../..')
+st.write(path)
 
 # -----------------------------------------------
 # Model Definition
