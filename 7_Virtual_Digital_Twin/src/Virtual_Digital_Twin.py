@@ -15,7 +15,11 @@ st.set_page_config(layout="wide", page_title="Phase & Velocity Prediction Viewer
 
 device = "cpu"
 path = os.path.abspath('../..')
-st.write(path)
+
+
+st.write("Current working directory:", os.getcwd())
+st.write("Files in current directory:", os.listdir())
+st.write("Value of path:", path)
 
 # -----------------------------------------------
 # Model Definition
@@ -92,6 +96,7 @@ def Test_Data_Prediction():
     Laser_type = st.selectbox("Select Laser Type", ("Gaussian", "FlatTop", "Bessel", "Ring"), index=2)
     t_step = st.slider("Select time step", 0, 12, 8)
 
+    # st.write(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')
     time = np.load(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
