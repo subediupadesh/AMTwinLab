@@ -159,7 +159,7 @@ def Test_Data_Prediction():
     cbar.ax.tick_params(labelsize=20,length=0)
     cbar.set_ticks([np.min(temperature)*1.15, (np.max(temperature)+300)/2, np.max(temperature)*0.97], labels=[f'{np.min(temperature):.0f}', f'{(np.max(temperature)+300)/2 :.0f}', f'{np.max(temperature):.0f}'], weight='bold') 
     ax1a.spines[:].set_linewidth(0)
-    ax1.text(412, 180, r'$\mathbf{\leftarrow}$T [K]$\mathbf{\rightarrow}$', fontsize=30, color='k', rotation=90, weight='bold', fontname='ADLaM Display',  zorder=20)
+    ax1.text(412, 180, r'$\mathbf{\leftarrow}$T [K]$\mathbf{\rightarrow}$', fontsize=30, color='k', rotation=90, weight='bold',  zorder=20, ) ##fontname='ADLaM Display'
     ax1.set_zorder(1)
     
     cmap = plt.get_cmap('RdYlGn_r')
@@ -175,7 +175,7 @@ def Test_Data_Prediction():
     ax2.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax2.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')   
     ax2.spines[:].set_linewidth(4)
-    ax2.text(435, 190, r'FCC    LIQ', fontsize=33, color='k', rotation=90, weight='bold', fontfamily='ADLaM Display')
+    ax2.text(435, 190, r'FCC    LIQ', fontsize=33, color='k', rotation=90, weight='bold', ) ## fontfamily='ADLaM Display')
     ax2a = fig.add_axes([0.907, 0.742, 0.02, 0.108])
     cmap = ListedColormap(['#8B0000', '#FFA500'])
     data = np.array([[0], [1]])
@@ -196,7 +196,7 @@ def Test_Data_Prediction():
     ax3.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax3.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')
     ax3.spines[:].set_linewidth(4)
-    ax3.text(435, 190, r'FCC    LIQ', fontsize=33, color='k', rotation=90, weight='bold', fontfamily='ADLaM Display')
+    ax3.text(435, 190, r'FCC    LIQ', fontsize=33, color='k', rotation=90, weight='bold', ) ## fontfamily='ADLaM Display')
     ax3a = fig.add_axes([0.485, 0.541, 0.02, 0.108])
     cmap = ListedColormap(['#8B0000', '#FFA500'])
     data = np.array([[0], [1]])
@@ -229,7 +229,7 @@ def Test_Data_Prediction():
     ax5a.tick_params(axis='both', labelcolor='black', labelsize=1, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
     cbar = fig.colorbar(hmap5, cax=ax5a, orientation='vertical')
     cbar.ax.tick_params(labelsize=25, direction='in', length=0) 
-    ax5.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold', fontname='ADLaM Display',  zorder=20)
+    ax5.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold',  zorder=20, ) ##fontname='ADLaM Display'
     cbar.set_ticks([np.max(pred_vel)*0.06, (np.max(pred_vel))/2, np.max(pred_vel)*0.96], labels=[f'{np.min(pred_vel):.0f}', f'{np.max(pred_vel)/2 :.0f}', f'{np.floor(np.max(pred_vel)):.0f}'], weight='bold') 
     ax5a.spines[:].set_linewidth(0)
     ax5.set_zorder(1)
@@ -245,7 +245,7 @@ def Test_Data_Prediction():
     ax6a.tick_params(axis='both', labelcolor='black', labelsize=1, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
     cbar = fig.colorbar(hmap6, cax=ax6a, orientation='vertical')
     cbar.ax.tick_params(labelsize=25, direction='in', length=0) 
-    ax6.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold', fontname='ADLaM Display',  zorder=20)
+    ax6.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold',  zorder=20, ) ##fontname='ADLaM Display'
     cbar.set_ticks([np.max(velocity)*0.06, (np.max(velocity))/2, np.max(velocity)*0.96], labels=[f'{np.min(velocity):.0f}', f'{np.max(velocity)/2 :.0f}', f'{np.max(velocity):.0f}'], weight='bold') 
     ax6a.spines[:].set_linewidth(0)
     ax6.set_zorder(1)
@@ -261,7 +261,7 @@ def Test_Data_Prediction():
     ax7a.tick_params(axis='both', labelcolor='black', labelsize=1, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
     cbar = fig.colorbar(hmap7, cax=ax7a, orientation='vertical')
     cbar.ax.tick_params(labelsize=25, direction='in', length=0) 
-    ax7.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold', fontname='ADLaM Display',  zorder=20)
+    ax7.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold',  zorder=20, ) ##fontname='ADLaM Display'
     cbar.set_ticks([np.max(error_vel)*0.06, (np.max(error_vel))/2, np.max(error_vel)*0.96], labels=[f'{np.min(error_vel):.0f}', f'{np.max(error_vel)/2 :.0f}', f'{np.max(error_vel):.0f}'], weight='bold') 
     ax7a.spines[:].set_linewidth(0)
     ax7.set_zorder(1)
@@ -288,7 +288,7 @@ def Test_Data_Prediction():
     ax6.text(2, 190, r'(f) Meltpool Velocity (FEM)', size=30, weight='bold', rotation=0, )  ## fontname='Play')
     ax7.text(2, 185, r'(g) Velocity Prediction Error', size=30, weight='bold', rotation=0, )  ## fontname='Play')
     
-    fig.text(0.44, 0.9, f'{Laser_type} HS', size=50, weight='bold', rotation=0, fontname='Play', color ='red')
+    fig.text(0.44, 0.9, f'{Laser_type} HS', size=50, weight='bold', rotation=0, color ='red', ) ##fontname='Play',
     
         
     # plt.show()
@@ -351,7 +351,7 @@ def run_prediction_step(t_step):
     cbar.ax.tick_params(labelsize=20,length=0)
     cbar.set_ticks([np.min(temperature)*1.15, (np.max(temperature)+300)/2, np.max(temperature)*0.97], labels=[f'{np.min(temperature):.0f}', f'{(np.max(temperature)+300)/2 :.0f}', f'{np.max(temperature):.0f}'], weight='bold') 
     ax1a.spines[:].set_linewidth(0)
-    ax1.text(412, 180, r'$\mathbf{\leftarrow}$T [K]$\mathbf{\rightarrow}$', fontsize=30, color='k', rotation=90, weight='bold', fontname='ADLaM Display',  zorder=20)
+    ax1.text(412, 180, r'$\mathbf{\leftarrow}$T [K]$\mathbf{\rightarrow}$', fontsize=30, color='k', rotation=90, weight='bold',  zorder=20, ) ## fontname='ADLaM Display' 
     ax1.set_zorder(1)
     
     cmap = plt.get_cmap('RdYlGn_r')
@@ -367,7 +367,7 @@ def run_prediction_step(t_step):
     ax2.arrow(laser_pos, -80, 0, 76,  width = 8.5, color='red', length_includes_head=True, clip_on=False)
     ax2.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')   
     ax2.spines[:].set_linewidth(4)
-    ax2.text(435, 190, r'FCC    LIQ', fontsize=33, color='k', rotation=90, weight='bold', fontfamily='ADLaM Display')
+    ax2.text(435, 190, r'FCC    LIQ', fontsize=33, color='k', rotation=90, weight='bold', ) ## fontfamily='ADLaM Display')
     ax2a = fig.add_axes([0.907, 0.57, 0.02, 0.27]) 
     cmap = ListedColormap(['#8B0000', '#FFA500'])
     data = np.array([[0], [1]])
@@ -385,7 +385,7 @@ def run_prediction_step(t_step):
     ax4a.tick_params(axis='both', labelcolor='black', labelsize=1, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
     cbar = fig.colorbar(hmap4, cax=ax4a, orientation='vertical')
     cbar.ax.tick_params(labelsize=25, direction='in', length=0) 
-    ax4.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold', fontname='ADLaM Display',  zorder=20)
+    ax4.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold', zorder=20, ) ## fontname='ADLaM Display'
     cbar.set_ticks([np.max(pred_vel)*0.06, (np.max(pred_vel))/2, np.max(pred_vel)*0.96], labels=[f'{np.min(pred_vel):.0f}', f'{np.max(pred_vel)/2 :.0f}', f'{np.floor(np.max(pred_vel)):.0f}'], weight='bold') 
     ax4a.spines[:].set_linewidth(0)
     ax4.set_zorder(1)
@@ -503,7 +503,7 @@ def UserUploaded_T_Data_Prediction():
     cbar.ax.tick_params(labelsize=20,length=0)
     cbar.set_ticks([np.min(temperature)*1.15, (np.max(temperature)+300)/2, np.max(temperature)*0.97], labels=[f'{np.min(temperature):.0f}', f'{(np.max(temperature)+300)/2 :.0f}', f'{np.max(temperature):.0f}'], weight='bold') 
     ax1a.spines[:].set_linewidth(0)
-    ax1.text(412, 180, r'$\mathbf{\leftarrow}$T [K]$\mathbf{\rightarrow}$', fontsize=30, color='k', rotation=90, weight='bold', fontname='ADLaM Display',  zorder=20)
+    ax1.text(412, 180, r'$\mathbf{\leftarrow}$T [K]$\mathbf{\rightarrow}$', fontsize=30, color='k', rotation=90, weight='bold', zorder=20, ) ##fontname='ADLaM Display'
     ax1.set_zorder(1)
     
     cmap = plt.get_cmap('RdYlGn_r')
@@ -516,7 +516,7 @@ def UserUploaded_T_Data_Prediction():
     ax2.set_ylim(201, -1);  ax4.set_xlim(-1,401)
     ax2.contour(temperature, levels=[1337], colors='black', linewidths=3, linestyles='dashed')   
     ax2.spines[:].set_linewidth(4)
-    ax2.text(435, 190, r'FCC    LIQ', fontsize=33, color='k', rotation=90, weight='bold', fontfamily='ADLaM Display')
+    ax2.text(435, 190, r'FCC    LIQ', fontsize=33, color='k', rotation=90, weight='bold', ) ## fontfamily='ADLaM Display')
     ax2a = fig.add_axes([0.907, 0.57, 0.02, 0.27]) 
     cmap = ListedColormap(['#8B0000', '#FFA500'])
     data = np.array([[0], [1]])
@@ -533,7 +533,7 @@ def UserUploaded_T_Data_Prediction():
     ax4a.tick_params(axis='both', labelcolor='black', labelsize=1, bottom=False, top=False, left=False, right=False, labelbottom=False, labelleft=False)
     cbar = fig.colorbar(hmap4, cax=ax4a, orientation='vertical')
     cbar.ax.tick_params(labelsize=25, direction='in', length=0) 
-    ax4.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold', fontname='ADLaM Display',  zorder=20)
+    ax4.text(412, 150, r'$\mathbf{[\mu m/s]}$', fontsize=25, color='k', rotation=90, weight='bold',  zorder=20, ) ##fontname='ADLaM Display'
     cbar.set_ticks([np.max(pred_vel)*0.06, (np.max(pred_vel))/2, np.max(pred_vel)*0.96], labels=[f'{np.min(pred_vel):.0f}', f'{np.max(pred_vel)/2 :.0f}', f'{np.floor(np.max(pred_vel)):.0f}'], weight='bold') 
     ax4a.spines[:].set_linewidth(0)
     ax4.set_zorder(1)
