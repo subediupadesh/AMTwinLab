@@ -92,7 +92,7 @@ def Test_Data_Prediction():
     Laser_type = st.selectbox("Select Laser Type", ("Gaussian", "FlatTop", "Bessel", "Ring"), index=2)
     t_step = st.slider("Select time step", 0, 12, 8)
 
-    time = np.load(f'../Test_Data/{Laser_type}_time.npy')[t_step]
+    time = np.load(path+f'/7_Virtual_Digital_Twin/Test_Data/{Laser_type}_time.npy')[t_step]
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
     
