@@ -421,7 +421,7 @@ def Unseen_Data_Prediction():
 
     # --- Manual mode ---
     if mode == "🖐️ Manual Time Step Selection":
-        t_step = st.slider("Select time step", 0, 49, 0)
+        t_step = st.slider("Select time step", 0, 49, 10)
         run_prediction_step(t_step)
 
     # --- Auto mode ---
