@@ -1,4 +1,4 @@
-# A robust phase-field U-net framework to digitally identify the melt pools from different heat source models in real time.
+# Spatioteomporally learning the morphological and dynamic features of Au melt pool under different heat source types with phase-field informed U-Net framework
 
 [Upadesh Subedi](https://www.linkedin.com/in/upadesh-s-0b321a15b/),
 [Aadya Bhattarai](https://www.linkedin.com/in/aadya-bhattarai-706769194/),
