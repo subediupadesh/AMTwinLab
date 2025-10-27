@@ -6,7 +6,8 @@
 [Tomasz Tański](https://www.linkedin.com/in/tomasz-tanski-888bb266/),
 [Anil Kunwar](https://www.linkedin.com/in/anil-kunwar-9ba81653/)
 
-This repository consists of the codes and data related to physics based computational models (phase field equations coupled with heat transfer and fluid flow equations) of laser processed Au metal structure, numerical fingerprints from the solutions sets of these models and the implementation of U-Net architecture in Raspberry Pi microcomputer to learn the computationally generated datasets. The sub-sets of U-net models : PhaseNet and VelNet are provided in another repository ( https://github.com/AadyaBhattarai/PhaseVelNet). 
+This repository consists of the codes and data related to physics based computational models (phase field equations coupled with heat transfer and fluid flow equations) of laser processed Au metal structure, numerical fingerprints from the solutions sets of these models and the implementation of U-Net architecture in Raspberry Pi microcomputer to learn the computationally generated datasets. The sub-sets of U-net models : PhaseNet and VelNet are provided in another repository ( https://github.com/AadyaBhattarai/PhaseVelNet).
+
 The four types of heat source models, namely Bessel, Flat-top,  Gaussian and Ring are considered in the Energy equation (Heat transfer PDE), and then coupled to other partial differential equations. 
 
 <!-- ## Phase Evolution
