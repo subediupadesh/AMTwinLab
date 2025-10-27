@@ -20,7 +20,7 @@ The four types of heat source models, namely Bessel, Flat-top,  Gaussian and Rin
 ![Bessel_Velocity](3_Simulation_Video_Animation/video_animations/Bessel/TDB/gif/Velocity.gif) -->
 
 # Digital Twin Design
-## Interactive Digital Twin Demo Streamlit WebApp : [![Laser-VDT](https://img.shields.io/badge/StreamlitAPP-streamlit-red)](https://laser-vdt.streamlit.app/)
+## Interactive Digital Twin Demo Streamlit WebApp : [![Laser-VDT](https://img.shields.io/badge/StreamlitAPP-streamlit-red)](https://amtwinlab.streamlit.app/)
 
 
 

@@ -1,1 +1,1 @@
-# Virtual Digital Twin Streamlit WebApp : [![Laser-VDT](https://img.shields.io/badge/StreamlitAPP-streamlit-red)](https://laser-vdt.streamlit.app/)
+# Virtual Digital Twin Streamlit WebApp : [![Laser-VDT](https://img.shields.io/badge/StreamlitAPP-streamlit-red)](https://amtwinlab.streamlit.app/)
