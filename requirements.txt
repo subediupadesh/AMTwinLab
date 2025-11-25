@@ -1,4 +1,4 @@
 numpy==2.2.2
-torch==2.5.1
+torch==2.7.1-rc1
 streamlit==1.41.1
 matplotlib==3.10.0
