@@ -459,12 +459,13 @@ def UserUploaded_T_Data_Prediction():
     st.header("T-Data Uploaded by User in numpy tensor (From Thermal Camera)")
 
     uploaded_file = st.file_uploader("📂 Upload Temperature Data (.npy file)", type=["npy"])
-    Laser_type = st.selectbox("Select Laser Type", ("Gaussian", "FlatTop", "Bessel", "Ring"), index=2)
+    # Laser_type = st.selectbox("Select Laser Type", ("Gaussian", "FlatTop", "Bessel", "Ring"), index=2)
+    Laser_type = st.selectbox("Select Laser Type", ("Gaussian", "FlatTop", "Bessel", "Ring"), index=None, placeholder="Select Beam Type")
     if uploaded_file is not None:
         temperature = np.load(uploaded_file)[0]
         st.success(r"✅ File uploaded successfully! Dimension: 1000$\mu m$ $\times$ 250 $\mu m$")
     else:
-        st.warning("⚠️ Please upload a .npy temperature file to proceed.")
+        st.warning("⚠️ Please upload a '.npy' temperature file to proceed.")
         st.stop()
     
     # temperature = np.load(f'../Unknown_Data/individual_temp_data/Bessel_temp_{t_step}.npy')[0]
