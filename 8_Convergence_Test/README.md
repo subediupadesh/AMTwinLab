@@ -7,6 +7,7 @@
 ### For 10 iterations:
 #### CPU clock time for convergence
 Longest time at delta = 1 micro-meter
+
 Fasters at delta = 20 micro-meter
 
 #### Actual Simulation Time after 10 iterations
@@ -14,4 +15,5 @@ delta of 1 micro-meter is stuck at 4 order of magnitude less than delta of 20 mi
 
 #### Maximum temperature reached after 10 iterations
 T-max for delta @ 1 micro-meters after 10 iterations = 300.75 K
+
 T-max for delta @ 20 micro-meters after 10 iterations = 559.14 K
