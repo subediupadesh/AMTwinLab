@@ -2,7 +2,7 @@
 
 ## Effect of interface width on Numerical Convergence
 
-The simulation will 
+<img src="figures/convergence_result.jpg" alt="Convergence Test Results" width="400"/>
 
 1. Not Converge at delta = 1 micro-meter
 2. Converge at delta = 10 micro-meter
