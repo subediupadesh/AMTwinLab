@@ -7,6 +7,7 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import streamlit as st
+import time as tm
 
 # ------------------------------
 # Streamlit Page Config
@@ -97,6 +98,9 @@ def Test_Data_Prediction():
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
     
+    # ⏱️ Start timing right after loading the file
+    start_time = tm.time()
+
     temperature = np.load(root_path+f'/7_Virtual_Digital_Twin/Test_Data/individual_temp_data/{Laser_type}_temp_{t_step}.npy')[0]
     phase = np.load(root_path+f'/7_Virtual_Digital_Twin/Test_Data/individual_phase_data/{Laser_type}_phase_{t_step}.npy')[0]
     velocity = np.load(root_path+f'/7_Virtual_Digital_Twin/Test_Data/individual_vel_data/{Laser_type}_vel_{t_step}.npy')[0]
@@ -134,6 +138,10 @@ def Test_Data_Prediction():
     Liq_Area_GT = ((1000*250)/(201*401)) * np.sum(phase)
     Perc_Area_Diff = np.abs(((Liq_Area_Pred-Liq_Area_GT)/Liq_Area_GT)*100)
     
+    # ⏱️ End timing
+    end_time = tm.time()
+    elapsed = end_time - start_time
+
     # -----------------------------------------------
     # Visualization
     # -----------------------------------------------
@@ -299,6 +307,9 @@ def Test_Data_Prediction():
     st.pyplot(fig)
     st.success(f"✅ Visualization complete for t_step = {t_step}, time = {time:.2f} s")
 
+    # 🔥 Show result
+    st.info(f"⏱️ Predicted in **{elapsed:.3f} seconds**")
+
 
 # ------------------------------
 # Unseen Data Prediction Function (to fill later)
@@ -314,6 +325,8 @@ def run_prediction_step(t_step):
     
     laser_speed = 30
     laser_pos = (125 + time*laser_speed)* 401/1000  # Laser actual position in true dimension
+    # ⏱️ Start timing right after loading the file
+    start_time = tm.time()
     temperature = np.load(root_path+f'/7_Virtual_Digital_Twin/Unknown_Data/individual_temp_data/Bessel_temp_{t_step}.npy')[0]
     temp_mean, temp_std , eps = 622.8411254882812, 433.029052734375, 1e-8
     temperature_norm = (temperature - temp_mean) / (temp_std + eps)
@@ -332,7 +345,10 @@ def run_prediction_step(t_step):
         pred_vel = model_VN(Input_TempVel).numpy()
         pred_vel = np.round(np.where(pred_vel < 1e-3, 0, pred_vel), decimals=2)[0,0]
     Liq_Area_Pred = ((1000*250)/(201*401)) * np.sum(pred_phase[0])
-    
+    # ⏱️ End timing
+    end_time = tm.time()
+    elapsed = end_time - start_time
+
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(24, 8), frameon=True)
     cmap = plt.get_cmap('RdYlBu_r')
     cmap.set_under('white', alpha=0)
@@ -408,6 +424,8 @@ def run_prediction_step(t_step):
     # -----------------------------------------------
     st.pyplot(fig)
     st.success(f"✅ Visualization complete for t_step = {t_step}, time = {time:.2f} s")
+    # 🔥 Show result
+    st.info(f"⏱️ Predicted in **{elapsed:.3f} seconds**")
     tm.sleep(0.3)  # just to simulate work time
 
 
@@ -468,6 +486,8 @@ def UserUploaded_T_Data_Prediction():
         st.warning("⚠️ Please upload a '.npy' temperature file to proceed.")
         st.stop()
     
+    # ⏱️ Start timing right after loading the file
+    start_time = tm.time()
     # temperature = np.load(f'../Unknown_Data/individual_temp_data/Bessel_temp_{t_step}.npy')[0]
     
     temp_mean, temp_std , eps = 622.8411254882812, 433.029052734375, 1e-8
@@ -489,6 +509,10 @@ def UserUploaded_T_Data_Prediction():
         pred_vel = np.round(np.where(pred_vel < 1e-3, 0, pred_vel), decimals=2)[0,0]
     Liq_Area_Pred = ((1000*250)/(201*401)) * np.sum(pred_phase[0])
     
+    # ⏱️ End timing
+    end_time = tm.time()
+    elapsed = end_time - start_time
+
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(24, 8), frameon=True)
     cmap = plt.get_cmap('RdYlBu_r')
     cmap.set_under('white', alpha=0)
@@ -560,7 +584,8 @@ def UserUploaded_T_Data_Prediction():
     # -----------------------------------------------
     st.pyplot(fig)
     st.success(f"✅ Visualization complete for uploaded Temperature Tensor Data with {Laser_type} Laser Beam")
-
+    # 🔥 Show result
+    st.info(f"⏱️ Predicted in **{elapsed:.3f} seconds**")
 
 
 # ------------------------------
