@@ -6,14 +6,17 @@
 [Tomasz Tański](https://www.linkedin.com/in/tomasz-tanski-888bb266/),
 [Anil Kunwar](https://www.linkedin.com/in/anil-kunwar-9ba81653/) -->
 
+# The full article for this work is available at:
+[Subedi, U.](https://www.linkedin.com/in/upadesh-s-0b321a15b/), [Bhattarai, A.](https://www.linkedin.com/in/aadya-bhattarai-706769194/), [Moelans, N.](https://www.linkedin.com/in/nele-moelans-57b1731/), [Tański, T.](https://www.linkedin.com/in/tomasz-tanski-888bb266/), & [Kunwar, A.](https://www.linkedin.com/in/anil-kunwar-9ba81653/) (2026). Spatiotemporally learning the morphological and dynamic features of Au meltpool under different heat source types with phase-field informed U-Net framework. Computational Materials Science, 263, 114456. https://doi.org/10.1016/j.commatsci.2025.114456
+
+# About the Repository
 
 This repository consists of the codes and data related to physics based computational models (phase field equations coupled with heat transfer and fluid flow equations) of laser processed Au metal structure, numerical fingerprints from the solutions sets of these models and the implementation of U-Net architecture in Raspberry Pi microcomputer to learn the computationally generated datasets. The sub-sets of U-net models : PhaseNet and VelNet are provided in another repository (https://github.com/AadyaBhattarai/PhaseVelNet).
 
 The four types of heat source models, namely Bessel, Flat-top,  Gaussian and Ring are considered in the Energy equation (Heat transfer PDE), and then coupled to other partial differential equations. 
 
 
-## The full article for this work is available at:
-[Subedi, U.](https://www.linkedin.com/in/upadesh-s-0b321a15b/), [Bhattarai, A.](https://www.linkedin.com/in/aadya-bhattarai-706769194/), [Moelans, N.](https://www.linkedin.com/in/nele-moelans-57b1731/), [Tański, T.](https://www.linkedin.com/in/tomasz-tanski-888bb266/), & [Kunwar, A.](https://www.linkedin.com/in/anil-kunwar-9ba81653/) (2026). [Spatiotemporally learning the morphological and dynamic features of Au meltpool under different heat source types with phase-field informed U-Net framework.](https://www.sciencedirect.com/science/article/pii/S0927025625007992) Computational Materials Science, 263, 114456. https://doi.org/10.1016/j.commatsci.2025.114456
+
 
 <!-- ## Phase Evolution
 ### Bessel Heat Source with TDB Free Energy
