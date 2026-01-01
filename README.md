@@ -11,7 +11,8 @@
 
 
 
-[Subedi, U.](https://www.linkedin.com/in/upadesh-s-0b321a15b/), [Bhattarai, A.](https://www.linkedin.com/in/aadya-bhattarai-706769194/), [Moelans, N.](https://www.linkedin.com/in/nele-moelans-57b1731/), [Tański, T.](https://www.linkedin.com/in/tomasz-tanski-888bb266/), & [Kunwar, A.](https://www.linkedin.com/in/anil-kunwar-9ba81653/) (2026). ***Spatiotemporally learning the morphological and dynamic features of Au meltpool under different heat source types with phase-field informed U-Net framework***. *Computational Materials Science*, **263**, 114456. https://www.sciencedirect.com/science/article/pii/S0927025625007992 [![DOI](https://img.shields.io/badge/DOI-10.1016/j.commatsci.2025.114456-blue)](https://doi.org/10.1016/j.commatsci.2025.114456)
+[Subedi, U.](https://www.linkedin.com/in/upadesh-s-0b321a15b/), [Bhattarai, A.](https://www.linkedin.com/in/aadya-bhattarai-706769194/), [Moelans, N.](https://www.linkedin.com/in/nele-moelans-57b1731/), [Tański, T.](https://www.linkedin.com/in/tomasz-tanski-888bb266/), & [Kunwar, A.](https://www.linkedin.com/in/anil-kunwar-9ba81653/) (2026). ***Spatiotemporally learning the morphological and dynamic features of Au meltpool under different heat source types with phase-field informed U-Net framework***. *Computational Materials Science*, **263**, 114456. https://www.sciencedirect.com/science/article/pii/S0927025625007992 
+[![DOI](https://img.shields.io/badge/DOI-10.1016/j.commatsci.2025.114456-blue)](https://doi.org/10.1016/j.commatsci.2025.114456)
 
 
 # About the Repository
