@@ -208,3 +208,9 @@ The four types of heat source models, namely Bessel, Flat-top,  Gaussian and Rin
     </td>
   </tr>
 </table>
+
+
+# 3D Laser Sources
+## Interactive 3D laser beam visualizations Streamlit WebApp : [![Laser Beams](https://img.shields.io/badge/StreamlitAPP-streamlit-red)](https://laser3d.streamlit.app/)
+
+
